@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Manoj | Engineering & Innovation</title>
+  <title>Manoj | Ideas into Reality</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,13 +12,15 @@
 
   <style>
     :root {
-      --bg: #05070d;
-      --card: rgba(255,255,255,0.055);
-      --border: rgba(255,255,255,0.11);
-      --text: #f5f7fb;
-      --muted: #9da6b8;
-      --accent: #7c9cff;
-      --accent2: #55e6c1;
+      --bg: #05060a;
+      --bg2: #0b0e17;
+      --card: rgba(255,255,255,.055);
+      --border: rgba(255,255,255,.11);
+      --text: #f5f7ff;
+      --muted: #9da6ba;
+      --blue: #7c9cff;
+      --cyan: #55e6c1;
+      --purple: #b18cff;
     }
 
     * {
@@ -30,69 +32,52 @@
 
     body {
       font-family: "Inter", sans-serif;
-      background: var(--bg);
       color: var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(124,156,255,.13), transparent 28%),
+        radial-gradient(circle at 85% 35%, rgba(177,140,255,.10), transparent 25%),
+        var(--bg);
       overflow-x: hidden;
     }
 
-    body::before {
-      content: "";
-      position: fixed;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(124,156,255,.18), transparent 65%);
-      top: -250px;
-      right: -200px;
-      pointer-events: none;
-      z-index: -1;
+    a {
+      color: inherit;
     }
 
-    body::after {
-      content: "";
-      position: fixed;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(85,230,193,.10), transparent 65%);
-      bottom: -250px;
-      left: -200px;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    /* NAVIGATION */
+    /* NAV */
 
     nav {
       position: fixed;
       top: 18px;
       left: 50%;
       transform: translateX(-50%);
-      width: min(92%, 1050px);
+      width: min(94%, 1100px);
       padding: 14px 20px;
       border: 1px solid var(--border);
       border-radius: 18px;
-      background: rgba(8,10,17,.72);
+      background: rgba(5,6,10,.72);
       backdrop-filter: blur(18px);
+      z-index: 1000;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 100;
     }
 
     .logo {
       font-family: "Space Grotesk", sans-serif;
-      font-weight: 700;
       font-size: 21px;
+      font-weight: 700;
       letter-spacing: -1px;
     }
 
     .logo span {
-      color: var(--accent);
+      color: var(--blue);
     }
 
     nav a {
-      color: var(--muted);
       text-decoration: none;
-      margin-left: 24px;
+      color: var(--muted);
+      margin-left: 22px;
       font-size: 14px;
       transition: .25s;
     }
@@ -109,52 +94,52 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 120px 7% 80px;
+      padding: 130px 7% 90px;
       position: relative;
     }
 
     .hero-content {
-      max-width: 900px;
-      animation: fadeUp 1s ease;
+      max-width: 950px;
+      animation: appear 1s ease;
     }
 
-    .status {
+    .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 9px;
-      padding: 8px 14px;
+      padding: 9px 15px;
       border: 1px solid var(--border);
       border-radius: 50px;
-      background: rgba(255,255,255,.04);
-      color: #cbd3e3;
+      background: rgba(255,255,255,.035);
+      color: #cbd3e4;
       font-size: 13px;
       margin-bottom: 28px;
     }
 
-    .dot {
+    .live-dot {
       width: 7px;
       height: 7px;
-      background: var(--accent2);
       border-radius: 50%;
-      box-shadow: 0 0 12px var(--accent2);
+      background: var(--cyan);
+      box-shadow: 0 0 14px var(--cyan);
     }
 
     h1 {
       font-family: "Space Grotesk", sans-serif;
-      font-size: clamp(55px, 10vw, 105px);
-      line-height: .95;
-      letter-spacing: -5px;
-      margin-bottom: 28px;
+      font-size: clamp(58px, 10vw, 110px);
+      line-height: .94;
+      letter-spacing: -6px;
+      margin-bottom: 30px;
     }
 
-    h1 span {
-      background: linear-gradient(90deg, #7c9cff, #55e6c1);
+    .gradient {
+      background: linear-gradient(90deg, var(--blue), var(--cyan), var(--purple));
       -webkit-background-clip: text;
       color: transparent;
     }
 
-    .hero p {
-      max-width: 680px;
+    .hero-description {
+      max-width: 700px;
       margin: auto;
       color: var(--muted);
       font-size: 18px;
@@ -165,38 +150,38 @@
       margin-top: 38px;
     }
 
-    .button {
+    .btn {
       display: inline-block;
-      padding: 14px 22px;
+      padding: 14px 23px;
       border-radius: 12px;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
       margin: 5px;
       transition: .3s;
     }
 
-    .primary {
-      color: #05070d;
+    .btn-primary {
       background: white;
+      color: #05060a;
     }
 
-    .primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 35px rgba(255,255,255,.15);
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 45px rgba(255,255,255,.13);
     }
 
-    .secondary {
-      color: white;
+    .btn-secondary {
       border: 1px solid var(--border);
       background: rgba(255,255,255,.04);
+      color: white;
     }
 
-    .secondary:hover {
-      transform: translateY(-3px);
-      border-color: #6878a0;
+    .btn-secondary:hover {
+      transform: translateY(-4px);
+      border-color: var(--blue);
     }
 
-    /* SECTIONS */
+    /* GENERAL */
 
     section {
       width: min(1100px, 90%);
@@ -204,98 +189,175 @@
       padding: 110px 0;
     }
 
-    .section-label {
-      color: var(--accent);
-      font-size: 13px;
-      font-weight: 700;
+    .label {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 13px;
     }
 
     h2 {
       font-family: "Space Grotesk", sans-serif;
-      font-size: clamp(35px, 5vw, 55px);
-      letter-spacing: -2px;
-      margin-bottom: 45px;
+      font-size: clamp(38px, 6vw, 58px);
+      letter-spacing: -3px;
+      margin-bottom: 42px;
     }
 
     /* ABOUT */
 
-    .about-box {
+    .glass {
       padding: 35px;
       border: 1px solid var(--border);
-      border-radius: 24px;
+      border-radius: 25px;
       background: var(--card);
-      backdrop-filter: blur(15px);
+      backdrop-filter: blur(18px);
     }
 
-    .about-box p {
+    .glass p {
       color: var(--muted);
       font-size: 18px;
       line-height: 1.9;
     }
 
-    /* PROJECTS */
+    /* FEATURE PROJECT */
+
+    .featured {
+      position: relative;
+      overflow: hidden;
+      padding: 45px;
+      border-radius: 30px;
+      border: 1px solid rgba(124,156,255,.25);
+      background:
+        radial-gradient(circle at 90% 15%, rgba(124,156,255,.18), transparent 30%),
+        radial-gradient(circle at 10% 90%, rgba(85,230,193,.08), transparent 25%),
+        rgba(255,255,255,.045);
+    }
+
+    .featured::after {
+      content: "Y";
+      position: absolute;
+      right: 25px;
+      bottom: -70px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 260px;
+      font-weight: 700;
+      color: rgba(255,255,255,.025);
+      pointer-events: none;
+    }
+
+    .featured-title {
+      font-family: "Space Grotesk", sans-serif;
+      font-size: clamp(35px, 5vw, 58px);
+      letter-spacing: -2px;
+      margin: 20px 0 15px;
+    }
+
+    .featured-description {
+      max-width: 720px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 17px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 28px 0;
+    }
+
+    .chip {
+      padding: 9px 13px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: #dce2ef;
+      font-size: 12px;
+    }
+
+    /* PROJECT Y FLOW */
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .flow-card {
+      padding: 25px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: rgba(255,255,255,.035);
+      transition: .3s;
+    }
+
+    .flow-card:hover {
+      transform: translateY(-7px);
+      border-color: var(--blue);
+      background: rgba(124,156,255,.06);
+    }
+
+    .flow-number {
+      font-size: 12px;
+      color: var(--blue);
+      font-weight: 800;
+    }
+
+    .flow-icon {
+      font-size: 28px;
+      margin: 18px 0 12px;
+    }
+
+    .flow-card h3 {
+      font-family: "Space Grotesk", sans-serif;
+      margin-bottom: 9px;
+    }
+
+    .flow-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    /* OTHER PROJECTS */
 
     .projects {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 22px;
+      gap: 20px;
     }
 
-    .project {
-      position: relative;
-      overflow: hidden;
-      min-height: 250px;
+    .project-card {
       padding: 30px;
-      border-radius: 24px;
       border: 1px solid var(--border);
-      background: linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.025));
-      transition: .35s;
+      border-radius: 24px;
+      background: var(--card);
+      transition: .3s;
     }
 
-    .project::before {
-      content: "";
-      position: absolute;
-      width: 180px;
-      height: 180px;
-      background: radial-gradient(circle, rgba(124,156,255,.18), transparent 70%);
-      right: -70px;
-      top: -70px;
+    .project-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(124,156,255,.45);
     }
 
-    .project:hover {
-      transform: translateY(-8px);
-      border-color: rgba(124,156,255,.5);
-      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    .project-number {
+      color: #68728a;
+      font-size: 12px;
+      font-weight: 800;
     }
 
-    .number {
-      color: #66708a;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .project h3 {
+    .project-card h3 {
       font-family: "Space Grotesk", sans-serif;
-      font-size: 28px;
-      margin: 35px 0 12px;
+      font-size: 26px;
+      margin: 28px 0 10px;
     }
 
-    .project p {
+    .project-card p {
       color: var(--muted);
       line-height: 1.7;
-    }
-
-    .tag {
-      display: inline-block;
-      margin-top: 22px;
-      padding: 7px 11px;
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      color: #cbd3e3;
-      font-size: 12px;
     }
 
     /* SKILLS */
@@ -308,48 +370,80 @@
 
     .skill {
       padding: 12px 17px;
-      border: 1px solid var(--border);
       border-radius: 12px;
+      border: 1px solid var(--border);
       background: var(--card);
-      color: #d8deea;
+      color: #dce2ef;
       transition: .25s;
     }
 
     .skill:hover {
-      transform: translateY(-3px);
-      border-color: var(--accent);
+      transform: translateY(-4px);
+      border-color: var(--cyan);
+    }
+
+    /* ROADMAP */
+
+    .roadmap {
+      border-left: 1px solid #30384a;
+      padding-left: 28px;
+    }
+
+    .roadmap-item {
+      position: relative;
+      margin-bottom: 35px;
+    }
+
+    .roadmap-item::before {
+      content: "";
+      position: absolute;
+      left: -34px;
+      top: 5px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 15px rgba(124,156,255,.7);
+    }
+
+    .roadmap-item h3 {
+      font-family: "Space Grotesk", sans-serif;
+      margin-bottom: 7px;
+    }
+
+    .roadmap-item p {
+      color: var(--muted);
+      line-height: 1.7;
     }
 
     /* CONTACT */
 
     .contact {
       text-align: center;
-      padding: 100px 30px;
+      padding: 80px 30px;
+      border-radius: 30px;
       border: 1px solid var(--border);
-      border-radius: 28px;
-      background: linear-gradient(145deg, rgba(124,156,255,.08), rgba(85,230,193,.04));
-    }
-
-    .contact h2 {
-      margin-bottom: 18px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(124,156,255,.14), transparent 45%),
+        rgba(255,255,255,.035);
     }
 
     .contact p {
       color: var(--muted);
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
 
     footer {
       text-align: center;
       padding: 40px 20px;
-      color: #66708a;
-      font-size: 13px;
+      color: #68728a;
       border-top: 1px solid rgba(255,255,255,.07);
+      font-size: 13px;
     }
 
     /* ANIMATION */
 
-    @keyframes fadeUp {
+    @keyframes appear {
       from {
         opacity: 0;
         transform: translateY(25px);
@@ -362,34 +456,66 @@
 
     /* MOBILE */
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
 
       nav {
         top: 10px;
       }
 
       nav a {
-        margin-left: 9px;
+        margin-left: 8px;
         font-size: 12px;
       }
 
       h1 {
-        letter-spacing: -3px;
-      }
-
-      .hero p {
-        font-size: 16px;
+        letter-spacing: -4px;
       }
 
       section {
         padding: 80px 0;
       }
 
+      .featured {
+        padding: 30px;
+      }
+
+      .flow {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .projects {
         grid-template-columns: 1fr;
       }
+    }
 
-      .about-box {
+    @media (max-width: 500px) {
+
+      nav {
+        padding: 12px 14px;
+      }
+
+      .logo {
+        font-size: 18px;
+      }
+
+      nav a {
+        margin-left: 6px;
+        font-size: 11px;
+      }
+
+      h1 {
+        font-size: 57px;
+      }
+
+      .hero-description {
+        font-size: 16px;
+      }
+
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .glass {
         padding: 25px;
       }
     }
@@ -398,15 +524,18 @@
 
 <body>
 
+  <!-- NAVIGATION -->
+
   <nav>
     <div class="logo">MANOJ<span>.</span></div>
 
     <div>
       <a href="#about">About</a>
-      <a href="#projects">Projects</a>
+      <a href="#project-y">Project Y</a>
       <a href="#skills">Skills</a>
     </div>
   </nav>
+
 
   <!-- HERO -->
 
@@ -414,28 +543,28 @@
 
     <div class="hero-content">
 
-      <div class="status">
-        <span class="dot"></span>
-        Building • Learning • Creating
+      <div class="eyebrow">
+        <span class="live-dot"></span>
+        Engineering student • Building ideas
       </div>
 
       <h1>
-        Ideas into<br>
-        <span>Reality.</span>
+        Think it.<br>
+        <span>Build it.</span>
       </h1>
 
-      <p>
-        I'm an engineering student exploring electronics, technology and
-        creative problem-solving — turning interesting ideas into projects
-        that could make a difference.
+      <p class="hero-description">
+        I'm an engineering student exploring electronics, technology,
+        3D design and creative problem-solving — turning ideas into
+        projects that could become something real.
       </p>
 
       <div class="buttons">
-        <a class="button primary" href="#projects">
-          Explore Projects →
+        <a href="#project-y" class="btn btn-primary">
+          Explore Project Y →
         </a>
 
-        <a class="button secondary" href="#about">
+        <a href="#about" class="btn btn-secondary">
           About Me
         </a>
       </div>
@@ -444,95 +573,134 @@
 
   </section>
 
+
   <!-- ABOUT -->
 
   <section id="about">
 
-    <div class="section-label">01 / About</div>
+    <div class="label">01 / About</div>
 
-    <h2>A little about me.</h2>
+    <h2>Learning by building.</h2>
 
-    <div class="about-box">
+    <div class="glass">
 
       <p>
-        I'm beginning my engineering journey with a simple approach:
-        learn something, build something, and improve it.
-        I'm interested in electronics, programming, web development,
-        emerging technology and ideas that can solve real-world problems.
+        I'm at the beginning of my engineering journey, learning by
+        experimenting, creating projects and asking how technology can
+        solve real-world problems. My interests include electronics,
+        programming, web development, 3D technology and innovative ideas.
       </p>
 
     </div>
 
   </section>
 
-  <!-- PROJECTS -->
 
-  <section id="projects">
+  <!-- PROJECT Y -->
 
-    <div class="section-label">02 / Projects</div>
+  <section id="project-y">
 
-    <h2>Things I'm building.</h2>
+    <div class="label">02 / Featured Project</div>
 
-    <div class="projects">
+    <div class="featured">
 
-      <div class="project">
+      <div class="label">PROJECT Y</div>
 
-        <div class="number">PROJECT 01</div>
+      <div class="featured-title">
+        3D Design Studio
+      </div>
 
-        <h3>Project X</h3>
+      <p class="featured-description">
+        Imagine drawing an idea on paper and being able to see it on
+        a 3D piece of clothing. Project Y is a concept for a platform
+        where users can design, customize and visualize clothing
+        interactively — with AI potentially helping transform ideas
+        faster.
+      </p>
+
+      <div class="chips">
+        <span class="chip">3D Clothing</span>
+        <span class="chip">Interactive Design</span>
+        <span class="chip">AI Assisted</span>
+        <span class="chip">Web Technology</span>
+      </div>
+
+      <a href="#how-it-works" class="btn btn-primary">
+        See How It Works ↓
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- HOW IT WORKS -->
+
+  <section id="how-it-works">
+
+    <div class="label">03 / Concept</div>
+
+    <h2>How Project Y could work.</h2>
+
+    <div class="flow">
+
+      <div class="flow-card">
+
+        <div class="flow-number">01</div>
+
+        <div class="flow-icon">✏️</div>
+
+        <h3>Create</h3>
 
         <p>
-          A compact boundary-security concept designed to detect
-          disturbances and notify the owner without relying on
-          conventional physical fencing.
+          Start with an idea, sketch or digital design that you want
+          to put onto a piece of clothing.
         </p>
-
-        <span class="tag">Security • Electronics</span>
 
       </div>
 
-      <div class="project">
+      <div class="flow-card">
 
-        <div class="number">PROJECT 02</div>
+        <div class="flow-number">02</div>
 
-        <h3>3D Design Studio</h3>
+        <div class="flow-icon">👕</div>
+
+        <h3>Place</h3>
 
         <p>
-          A creative platform concept where users can experiment with
-          clothing designs in an interactive 3D environment.
+          Apply the design to a virtual 3D garment and position it
+          where you want it.
         </p>
-
-        <span class="tag">3D • Web • Design</span>
 
       </div>
 
-      <div class="project">
+      <div class="flow-card">
 
-        <div class="number">PROJECT 03</div>
+        <div class="flow-number">03</div>
 
-        <h3>Future Project</h3>
+        <div class="flow-icon">🔄</div>
+
+        <h3>Customize</h3>
 
         <p>
-          More experiments, prototypes and ideas will appear here as
-          my engineering journey continues.
+          Rotate the garment and experiment with size, placement,
+          colors and different clothing regions.
         </p>
-
-        <span class="tag">Coming Soon</span>
 
       </div>
 
-      <div class="project">
+      <div class="flow-card">
 
-        <div class="number">PROJECT 04</div>
+        <div class="flow-number">04</div>
 
-        <h3>What's Next?</h3>
+        <div class="flow-icon">🤖</div>
+
+        <h3>AI Future</h3>
 
         <p>
-          The best project hasn't been built yet. This space is reserved
-          for the next idea worth turning into reality.
+          A future version could use AI to help modify designs,
+          clothing regions and styles from simple instructions.
         </p>
-
-        <span class="tag">Innovation</span>
 
       </div>
 
@@ -540,27 +708,143 @@
 
   </section>
 
+
+  <!-- WHY PROJECT Y -->
+
+  <section>
+
+    <div class="label">04 / Vision</div>
+
+    <h2>Why this idea?</h2>
+
+    <div class="glass">
+
+      <p>
+        Traditional clothing design tools can be difficult for beginners.
+        Project Y aims to make experimentation more visual and intuitive:
+        instead of imagining how a design might look on clothing,
+        users could interact with a 3D version and see the result
+        immediately.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- OTHER PROJECTS -->
+
+  <section>
+
+    <div class="label">05 / More Ideas</div>
+
+    <h2>Other projects.</h2>
+
+    <div class="projects">
+
+      <div class="project-card">
+
+        <div class="project-number">PROJECT 01</div>
+
+        <h3>Project X</h3>
+
+        <p>
+          A security-system concept exploring compact boundary detection
+          and notification without relying on traditional physical
+          fencing.
+        </p>
+
+      </div>
+
+      <div class="project-card">
+
+        <div class="project-number">PROJECT 02</div>
+
+        <h3>Future Projects</h3>
+
+        <p>
+          New experiments, prototypes and engineering ideas will be
+          added here as they are developed.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
   <!-- SKILLS -->
 
   <section id="skills">
 
-    <div class="section-label">03 / Skills</div>
+    <div class="label">06 / Skills</div>
 
-    <h2>Currently learning.</h2>
+    <h2>Things I'm learning.</h2>
 
     <div class="skills">
 
       <div class="skill">Electronics</div>
       <div class="skill">Programming</div>
       <div class="skill">Web Development</div>
-      <div class="skill">Problem Solving</div>
       <div class="skill">3D Development</div>
-      <div class="skill">Creative Thinking</div>
+      <div class="skill">Problem Solving</div>
+      <div class="skill">Creative Design</div>
       <div class="skill">Engineering</div>
+      <div class="skill">AI Concepts</div>
 
     </div>
 
   </section>
+
+
+  <!-- ROADMAP -->
+
+  <section>
+
+    <div class="label">07 / Journey</div>
+
+    <h2>What's next?</h2>
+
+    <div class="roadmap">
+
+      <div class="roadmap-item">
+
+        <h3>Learn the fundamentals</h3>
+
+        <p>
+          Build a strong foundation in programming, electronics and
+          engineering concepts.
+        </p>
+
+      </div>
+
+      <div class="roadmap-item">
+
+        <h3>Build Project Y</h3>
+
+        <p>
+          Turn the concept into a working 3D prototype and experiment
+          with interactive clothing design.
+        </p>
+
+      </div>
+
+      <div class="roadmap-item">
+
+        <h3>Keep experimenting</h3>
+
+        <p>
+          Build new projects, learn from failures and gradually turn
+          ideas into useful technology.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
 
   <!-- CONTACT -->
 
@@ -568,25 +852,26 @@
 
     <div class="contact">
 
-      <div class="section-label">04 / Future</div>
+      <div class="label">08 / Future</div>
 
-      <h2>Let's build something.</h2>
+      <h2>More is coming.</h2>
 
       <p>
-        This portfolio will evolve alongside my engineering journey.
+        This website will grow as the projects grow.
       </p>
 
-      <a class="button primary" href="#projects">
-        See My Work →
+      <a href="#project-y" class="btn btn-primary">
+        Back to Project Y ↑
       </a>
 
     </div>
 
   </section>
 
+
   <footer>
-    © 2026 Manoj. Built with curiosity.
+    © 2026 Manoj • Ideas into reality.
   </footer>
 
 </body>
-  </html>
+</html>
