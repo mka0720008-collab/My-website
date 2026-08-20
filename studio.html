@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
 <title>Project Y — 3D Studio</title>
 
@@ -15,7 +18,7 @@
 }
 
 body{
-  font-family:Arial,sans-serif;
+  font-family:Arial, sans-serif;
   background:#070910;
   color:white;
   overflow:hidden;
@@ -47,7 +50,7 @@ header{
 }
 
 .logo{
-  font-size:20px;
+  font-size:21px;
   font-weight:800;
 }
 
@@ -58,7 +61,7 @@ header{
 .back{
   color:#aab1c0;
   text-decoration:none;
-  font-size:14px;
+  font-size:15px;
 }
 
 .panel{
@@ -68,14 +71,14 @@ header{
   right:20px;
   top:90px;
 
-  width:300px;
+  width:310px;
   max-height:calc(100vh - 110px);
 
   overflow-y:auto;
 
   padding:22px;
 
-  background:rgba(13,16,26,.9);
+  background:rgba(13,16,26,.92);
   backdrop-filter:blur(20px);
 
   border:1px solid rgba(255,255,255,.12);
@@ -83,7 +86,7 @@ header{
 }
 
 .panel h1{
-  font-size:25px;
+  font-size:26px;
   margin-bottom:7px;
 }
 
@@ -112,7 +115,7 @@ label{
 
 input[type="color"]{
   width:100%;
-  height:40px;
+  height:42px;
   border:0;
   border-radius:10px;
   cursor:pointer;
@@ -132,7 +135,7 @@ input[type="file"]{
 
 .button{
   width:100%;
-  padding:11px;
+  padding:12px;
   margin-bottom:8px;
 
   border:1px solid rgba(255,255,255,.12);
@@ -142,11 +145,25 @@ input[type="file"]{
   color:white;
 
   cursor:pointer;
+  font-size:14px;
 }
 
 .button:hover{
   background:rgba(124,156,255,.2);
   border-color:#7c9cff;
+}
+
+.status{
+  margin-top:12px;
+  padding:10px;
+
+  border-radius:10px;
+
+  background:rgba(255,255,255,.04);
+
+  color:#929bad;
+  font-size:12px;
+  line-height:1.4;
 }
 
 .hint{
@@ -155,6 +172,7 @@ input[type="file"]{
 
   bottom:20px;
   left:50%;
+
   transform:translateX(-50%);
 
   padding:10px 17px;
@@ -166,7 +184,27 @@ input[type="file"]{
 
   color:#929bad;
   font-size:12px;
+
   white-space:nowrap;
+}
+
+.loading{
+  position:fixed;
+  z-index:30;
+
+  inset:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#070910;
+
+  font-size:18px;
+}
+
+.hidden{
+  display:none;
 }
 
 @media(max-width:700px){
@@ -178,9 +216,11 @@ input[type="file"]{
     top:auto;
 
     width:auto;
-    max-height:42vh;
+
+    max-height:43vh;
 
     padding:16px;
+
     border-radius:18px;
   }
 
@@ -203,10 +243,16 @@ input[type="file"]{
 }
 
 </style>
+
 </head>
 
 
 <body>
+
+
+<div id="loading" class="loading">
+  Loading Project Y 3D Studio...
+</div>
 
 
 <header>
@@ -230,11 +276,12 @@ input[type="file"]{
   <h1>3D Studio</h1>
 
   <p class="description">
-    Turn an idea into a virtual clothing design.
+    Design, customize and visualize your clothing idea
+    in an interactive 3D environment.
   </p>
 
 
-  <!-- SHIRT COLOR -->
+  <!-- GARMENT COLOR -->
 
   <div class="control">
 
@@ -251,7 +298,7 @@ input[type="file"]{
   </div>
 
 
-  <!-- UPLOAD DESIGN -->
+  <!-- IMAGE -->
 
   <div class="control">
 
@@ -296,7 +343,7 @@ input[type="file"]{
   </div>
 
 
-  <!-- DESIGN VERTICAL POSITION -->
+  <!-- DESIGN HEIGHT -->
 
   <div class="control">
 
@@ -328,15 +375,7 @@ input[type="file"]{
     class="button"
     id="projectButton"
   >
-    ✦ PROJECT Y Design
-  </button>
-
-
-  <button
-    class="button"
-    id="futureButton"
-  >
-    ◆ FUTURE Design
+    ✦ Add PROJECT Y
   </button>
 
 
@@ -355,6 +394,14 @@ input[type="file"]{
     Reset Studio
   </button>
 
+
+  <div
+    class="status"
+    id="status"
+  >
+    Loading 3D garment...
+  </div>
+
 </div>
 
 
@@ -367,15 +414,23 @@ input[type="file"]{
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
 
+
+<!-- ORBIT CONTROLS -->
+
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
+
+<!-- GLTF LOADER -->
+
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+
+
 <script>
 
 
-/* ==========================================
+/* =========================================
    SCENE
-========================================== */
+========================================= */
 
 const scene =
 new THREE.Scene();
@@ -384,33 +439,34 @@ scene.background =
 new THREE.Color(0x070910);
 
 
-/* ==========================================
+/* =========================================
    CAMERA
-========================================== */
+========================================= */
 
 const camera =
 new THREE.PerspectiveCamera(
   40,
   window.innerWidth /
   window.innerHeight,
-  0.1,
+  0.01,
   100
 );
 
 camera.position.set(
   0,
-  1.4,
-  6
+  1.5,
+  5
 );
 
 
-/* ==========================================
+/* =========================================
    RENDERER
-========================================== */
+========================================= */
 
 const renderer =
 new THREE.WebGLRenderer({
-  antialias:true
+  antialias:true,
+  alpha:false
 });
 
 renderer.setPixelRatio(
@@ -425,22 +481,19 @@ renderer.setSize(
   window.innerHeight
 );
 
+renderer.outputEncoding =
+THREE.sRGBEncoding;
+
 renderer.shadowMap.enabled=true;
 
 document
   .getElementById("app")
-  .appendChild(
-    renderer.domElement
-  );
+  .appendChild(renderer.domElement);
 
 
-/* ==========================================
-   ORBIT CONTROLS
-
-   Drag = rotate
-   Pinch = zoom
-   Scroll = zoom
-========================================== */
+/* =========================================
+   CONTROLS
+========================================= */
 
 const controls =
 new THREE.OrbitControls(
@@ -450,250 +503,388 @@ new THREE.OrbitControls(
 
 controls.enableDamping=true;
 
-controls.dampingFactor=.08;
+controls.dampingFactor=0.08;
 
 controls.enablePan=false;
 
-controls.minDistance=3;
+controls.minDistance=1.5;
 
-controls.maxDistance=9;
+controls.maxDistance=8;
 
 controls.target.set(
   0,
-  1.3,
+  1.5,
   0
 );
 
 
-/* ==========================================
-   LIGHTS
-========================================== */
+/* =========================================
+   LIGHTING
+========================================= */
 
-const ambient =
-new THREE.AmbientLight(
+const ambientLight =
+new THREE.HemisphereLight(
   0xffffff,
-  1.8
+  0x202030,
+  2.2
 );
 
-scene.add(ambient);
+scene.add(
+  ambientLight
+);
 
 
-const mainLight =
+const keyLight =
 new THREE.DirectionalLight(
   0xffffff,
   3
 );
 
-mainLight.position.set(
-  3,
-  5,
+keyLight.position.set(
+  4,
+  6,
   5
 );
 
-mainLight.castShadow=true;
+keyLight.castShadow=true;
 
-scene.add(mainLight);
-
-
-const sideLight =
-new THREE.DirectionalLight(
-  0x7c9cff,
-  2
+scene.add(
+  keyLight
 );
 
-sideLight.position.set(
+
+const fillLight =
+new THREE.DirectionalLight(
+  0x9bb5ff,
+  1.5
+);
+
+fillLight.position.set(
   -4,
   3,
   4
 );
 
-scene.add(sideLight);
+scene.add(
+  fillLight
+);
 
 
-/* ==========================================
-   SHIRT GROUP
-========================================== */
+/* =========================================
+   REAL 3D SHIRT
+========================================= */
 
 const shirt =
 new THREE.Group();
 
-scene.add(shirt);
-  const loader = new THREE.GLTFLoader();
+scene.add(
+  shirt
+);
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let realShirt=null;
+
+let design=null;
+
+let shirtMaterials=[];
+
+
+/* =========================================
+   GLTF LOADER
+========================================= */
+
+const loader =
+new THREE.GLTFLoader();
+
+
 loader.load(
-"/My-website/tshirt.glb",
+
+  "/My-website/tshirt.glb",
+
 
   function(gltf){
 
-    const realShirt = gltf.scene;
+    realShirt =
+    gltf.scene;
 
-    realShirt.scale.set(
-      2,
-      2,
-      2
+
+    /*
+      Add ONLY the real GLB.
+
+      There is NO old box shirt.
+    */
+
+    shirt.add(
+      realShirt
     );
 
-    realShirt.position.set(
+
+    /* -------------------------------------
+       FIND MODEL SIZE
+    ------------------------------------- */
+
+    const box =
+    new THREE.Box3()
+      .setFromObject(
+        realShirt
+      );
+
+
+    const size =
+    box.getSize(
+      new THREE.Vector3()
+    );
+
+
+    const center =
+    box.getCenter(
+      new THREE.Vector3()
+    );
+
+
+    /*
+      Center the model.
+    */
+
+    realShirt.position.x -=
+    center.x;
+
+    realShirt.position.y -=
+    center.y;
+
+    realShirt.position.z -=
+    center.z;
+
+
+    /* -------------------------------------
+       AUTOMATIC SCALE
+    ------------------------------------- */
+
+    const targetHeight=3.6;
+
+
+    if(size.y > 0){
+
+      const scale =
+      targetHeight /
+      size.y;
+
+
+      realShirt.scale.set(
+        scale,
+        scale,
+        scale
+      );
+
+    }
+
+
+    /* -------------------------------------
+       FIND ALL MATERIALS
+    ------------------------------------- */
+
+    realShirt.traverse(
+      function(object){
+
+        if(
+          object.isMesh
+        ){
+
+          object.castShadow=true;
+
+          object.receiveShadow=true;
+
+
+          if(
+            object.material
+          ){
+
+            if(
+              Array.isArray(
+                object.material
+              )
+            ){
+
+              object.material
+                .forEach(
+                  function(mat){
+
+                    shirtMaterials
+                      .push(mat);
+
+                  }
+                );
+
+            }
+
+            else{
+
+              shirtMaterials
+                .push(
+                  object.material
+                );
+
+            }
+
+          }
+
+        }
+
+      }
+    );
+
+
+    /* -------------------------------------
+       CAMERA POSITION
+    ------------------------------------- */
+
+    controls.target.set(
       0,
-      -1,
+      0,
       0
     );
 
-    shirt.add(realShirt);
 
-    console.log("REAL SHIRT LOADED");
+    camera.position.set(
+      0,
+      0.2,
+      5
+    );
+
+
+    controls.update();
+
+
+    /* -------------------------------------
+       STATUS
+    ------------------------------------- */
+
+    document
+      .getElementById(
+        "status"
+      )
+      .textContent =
+      "✓ Real 3D T-shirt loaded";
+
+
+    document
+      .getElementById(
+        "loading"
+      )
+      .classList.add(
+        "hidden"
+      );
+
+
+    console.log(
+      "PROJECT Y 3D MODEL LOADED"
+    );
 
   },
 
-  undefined,
+
+  function(xhr){
+
+    if(xhr.total){
+
+      const percent =
+      Math.round(
+        xhr.loaded /
+        xhr.total *
+        100
+      );
+
+
+      document
+        .getElementById(
+          "status"
+        )
+        .textContent =
+        "Loading 3D garment... " +
+        percent +
+        "%";
+
+    }
+
+  },
+
 
   function(error){
 
     console.error(
-      "SHIRT ERROR:",
+      "GLB ERROR:",
       error
     );
 
+
+    document
+      .getElementById(
+        "loading"
+      )
+      .textContent =
+      "Unable to load the 3D garment";
+
+
+    document
+      .getElementById(
+        "status"
+      )
+      .textContent =
+      "⚠ Check tshirt.glb";
+
   }
+
 );
 
 
-/* ==========================================
-   SHIRT MATERIAL
-========================================== */
+/* =========================================
+   GARMENT COLOR
+========================================= */
 
-const shirtMaterial =
-new THREE.MeshStandardMaterial({
-  color:0xeeeeee,
-  roughness:.8,
-  metalness:0
-});
+document
+  .getElementById(
+    "shirtColor"
+  )
+  .addEventListener(
+    "input",
+    function(){
 
-
-/* ==========================================
-   SHIRT BODY
-
-   Rounded box gives the body
-   a softer clothing-like appearance.
-========================================== */
-
-const bodyGeometry =
-new THREE.BoxGeometry(
-  2.3,
-  2.7,
-  .65,
-  12,
-  16,
-  8
-);
-
-const body =
-new THREE.Mesh(
-  bodyGeometry,
-  shirtMaterial
-);
-
-body.position.y=1.25;
-
-body.castShadow=true;
-
-shirt.add(body);
+      const color =
+      new THREE.Color(
+        this.value
+      );
 
 
-/* ==========================================
-   LEFT SLEEVE
-========================================== */
+      shirtMaterials
+        .forEach(
+          function(material){
 
-const sleeveGeometry =
-new THREE.BoxGeometry(
-  .85,
-  1.45,
-  .65,
-  8,
-  10,
-  6
-);
+            if(
+              material.color
+            ){
 
-const leftSleeve =
-new THREE.Mesh(
-  sleeveGeometry,
-  shirtMaterial
-);
+              material.color.copy(
+                color
+              );
 
-leftSleeve.position.set(
-  -1.5,
-  1.75,
-  0
-);
+            }
 
-leftSleeve.rotation.z=-.38;
+          }
+        );
 
-leftSleeve.castShadow=true;
-
-shirt.add(leftSleeve);
+    }
+  );
 
 
-/* ==========================================
-   RIGHT SLEEVE
-========================================== */
+/* =========================================
+   CREATE TEXT DESIGN
+========================================= */
 
-const rightSleeve =
-new THREE.Mesh(
-  sleeveGeometry,
-  shirtMaterial
-);
-
-rightSleeve.position.set(
-  1.5,
-  1.75,
-  0
-);
-
-rightSleeve.rotation.z=.38;
-
-rightSleeve.castShadow=true;
-
-shirt.add(rightSleeve);
-
-
-/* ==========================================
-   COLLAR
-========================================== */
-
-const collarGeometry =
-new THREE.TorusGeometry(
-  .38,
-  .065,
-  16,
-  40,
-  Math.PI*1.8
-);
-
-const collar =
-new THREE.Mesh(
-  collarGeometry,
-  shirtMaterial
-);
-
-collar.rotation.x=
-Math.PI/2;
-
-collar.position.set(
-  0,
-  2.48,
-  .34
-);
-
-shirt.add(collar);
-
-
-/* ==========================================
-   DESIGN
-========================================== */
-
-let design=null;
-
-
-function createTextDesign(text){
+function createProjectDesign(){
 
   removeDesign();
 
@@ -703,34 +894,44 @@ function createTextDesign(text){
     "canvas"
   );
 
+
   canvas.width=1200;
+
   canvas.height=600;
 
 
   const ctx =
-  canvas.getContext("2d");
+  canvas.getContext(
+    "2d"
+  );
 
 
   ctx.clearRect(
     0,
     0,
-    1200,
-    600
+    canvas.width,
+    canvas.height
   );
 
 
   ctx.font=
-  "bold 145px Arial";
+  "bold 150px Arial";
 
-  ctx.textAlign="center";
 
-  ctx.textBaseline="middle";
+  ctx.textAlign=
+  "center";
 
-  ctx.fillStyle="#111827";
+
+  ctx.textBaseline=
+  "middle";
+
+
+  ctx.fillStyle=
+  "#111111";
 
 
   ctx.fillText(
-    text,
+    "PROJECT Y",
     600,
     300
   );
@@ -742,47 +943,69 @@ function createTextDesign(text){
   );
 
 
+  texture.encoding =
+  THREE.sRGBEncoding;
+
+
   const material =
   new THREE.MeshBasicMaterial({
+
     map:texture,
-    transparent:true
+
+    transparent:true,
+
+    side:THREE.DoubleSide
+
   });
 
 
   design =
   new THREE.Mesh(
+
     new THREE.PlaneGeometry(
       1.5,
-      .75
+      0.75
     ),
+
     material
+
   );
 
+
+  /*
+    Put design in front
+    of the garment.
+  */
 
   design.position.set(
     0,
-    1.4,
-    .34
+    0.15,
+    0.8
   );
 
 
-  shirt.add(design);
+  shirt.add(
+    design
+  );
 
 }
 
 
-/* ==========================================
-   UPLOAD IMAGE
-========================================== */
+/* =========================================
+   UPLOAD DESIGN
+========================================= */
 
 document
-  .getElementById("imageUpload")
+  .getElementById(
+    "imageUpload"
+  )
   .addEventListener(
     "change",
     function(event){
 
       const file =
       event.target.files[0];
+
 
       if(!file){
         return;
@@ -793,43 +1016,63 @@ document
       new FileReader();
 
 
-      reader.onload=function(e){
+      reader.onload=
+      function(e){
 
         removeDesign();
 
 
-        const texture =
-        new THREE.TextureLoader()
-        .load(
-          e.target.result
+        const textureLoader =
+        new THREE.TextureLoader();
+
+
+        textureLoader.load(
+          e.target.result,
+          function(texture){
+
+            texture.encoding =
+            THREE.sRGBEncoding;
+
+
+            const material =
+            new THREE.MeshBasicMaterial({
+
+              map:texture,
+
+              transparent:true,
+
+              side:
+              THREE.DoubleSide
+
+            });
+
+
+            design =
+            new THREE.Mesh(
+
+              new THREE.PlaneGeometry(
+                1.5,
+                1
+              ),
+
+              material
+
+            );
+
+
+            design.position.set(
+              0,
+              0.15,
+              0.8
+            );
+
+
+            shirt.add(
+              design
+            );
+
+          }
         );
-
-
-        const material =
-        new THREE.MeshBasicMaterial({
-          map:texture,
-          transparent:true
-        });
-
-
-        design =
-        new THREE.Mesh(
-          new THREE.PlaneGeometry(
-            1.5,
-            1.0
-          ),
-          material
-        );
-
-
-        design.position.set(
-          0,
-          1.4,
-          .35
-        );
-
-
-        shirt.add(design);
 
       };
 
@@ -842,65 +1085,22 @@ document
   );
 
 
-/* ==========================================
-   REMOVE DESIGN
-========================================== */
-
-function removeDesign(){
-
-  if(!design){
-    return;
-  }
-
-
-  shirt.remove(
-    design
-  );
-
-
-  if(design.material.map){
-    design.material.map.dispose();
-  }
-
-  design.material.dispose();
-
-  design.geometry.dispose();
-
-  design=null;
-
-}
-
-
-/* ==========================================
-   COLOR
-========================================== */
-
-document
-  .getElementById("shirtColor")
-  .addEventListener(
-    "input",
-    function(){
-
-      shirtMaterial.color.set(
-        this.value
-      );
-
-    }
-  );
-
-
-/* ==========================================
+/* =========================================
    DESIGN SIZE
-========================================== */
+========================================= */
 
 document
-  .getElementById("designSize")
+  .getElementById(
+    "designSize"
+  )
   .addEventListener(
     "input",
     function(){
 
       const value =
-      Number(this.value);
+      Number(
+        this.value
+      );
 
 
       document
@@ -908,7 +1108,7 @@ document
           "sizeValue"
         )
         .textContent =
-        value+"%";
+        value + "%";
 
 
       if(!design){
@@ -917,7 +1117,7 @@ document
 
 
       const scale =
-      value/100;
+      value / 100;
 
 
       design.scale.set(
@@ -930,18 +1130,22 @@ document
   );
 
 
-/* ==========================================
+/* =========================================
    DESIGN POSITION
-========================================== */
+========================================= */
 
 document
-  .getElementById("designPosition")
+  .getElementById(
+    "designPosition"
+  )
   .addEventListener(
     "input",
     function(){
 
       const value =
-      Number(this.value);
+      Number(
+        this.value
+      );
 
 
       document
@@ -958,47 +1162,82 @@ document
 
 
       design.position.y =
-      1.4 +
-      value/100;
+      0.15 +
+      value / 100;
 
     }
   );
 
 
-/* ==========================================
-   BUTTONS
-========================================== */
+/* =========================================
+   ADD PROJECT Y
+========================================= */
 
 document
-  .getElementById("projectButton")
+  .getElementById(
+    "projectButton"
+  )
   .addEventListener(
     "click",
     function(){
 
-      createTextDesign(
-        "PROJECT Y"
-      );
+      createProjectDesign();
 
     }
   );
 
 
-document
-  .getElementById("futureButton")
-  .addEventListener(
-    "click",
-    function(){
+/* =========================================
+   REMOVE DESIGN
+========================================= */
 
-      createTextDesign(
-        "FUTURE"
-      );
+function removeDesign(){
 
-    }
+  if(!design){
+    return;
+  }
+
+
+  shirt.remove(
+    design
   );
 
 
+  if(
+    design.material &&
+    design.material.map
+  ){
+
+    design.material.map.dispose();
+
+  }
+
+
+  if(
+    design.material
+  ){
+
+    design.material.dispose();
+
+  }
+
+
+  design.geometry.dispose();
+
+
+  design=null;
+
+}
+
+
+/* =========================================
+   REMOVE BUTTON
+========================================= */
+
 document
-  .getElementById("removeButton")
+  .getElementById(
+    "removeButton"
+  )
   .addEventListener(
     "click",
     function(){
@@ -1009,18 +1248,25 @@ document
   );
 
 
-/* ==========================================
+/* =========================================
    RESET
-========================================== */
+========================================= */
 
 document
-  .getElementById("resetButton")
+  .getElementById(
+    "resetButton"
+  )
   .addEventListener(
     "click",
     function(){
 
-      shirtMaterial.color.set(
-        0xeeeeee
+      /*
+        Reset color.
+      */
+
+      const defaultColor =
+      new THREE.Color(
+        "#eeeeee"
       );
 
 
@@ -1029,6 +1275,31 @@ document
           "shirtColor"
         )
         .value="#eeeeee";
+
+
+      shirtMaterials
+        .forEach(
+          function(material){
+
+            if(
+              material.color
+            ){
+
+              material.color.copy(
+                defaultColor
+              );
+
+            }
+
+          }
+        );
+
+
+      /*
+        Reset design.
+      */
+
+      removeDesign();
 
 
       document
@@ -1059,27 +1330,40 @@ document
         .textContent="0";
 
 
-      removeDesign();
+      /*
+        Reset camera.
+      */
+
+      camera.position.set(
+        0,
+        0.2,
+        5
+      );
 
 
-      controls.reset();
+      controls.target.set(
+        0,
+        0,
+        0
+      );
+
+
+      controls.update();
 
     }
   );
 
 
-/* ==========================================
+/* =========================================
    START WITH PROJECT Y
-========================================== */
+========================================= */
 
-createTextDesign(
-  "PROJECT Y"
-);
+createProjectDesign();
 
 
-/* ==========================================
-   RESIZE
-========================================== */
+/* =========================================
+   WINDOW RESIZE
+========================================= */
 
 window.addEventListener(
   "resize",
@@ -1088,6 +1372,7 @@ window.addEventListener(
     camera.aspect =
     window.innerWidth /
     window.innerHeight;
+
 
     camera.updateProjectionMatrix();
 
@@ -1101,9 +1386,9 @@ window.addEventListener(
 );
 
 
-/* ==========================================
+/* =========================================
    ANIMATION
-========================================== */
+========================================= */
 
 function animate(){
 
@@ -1122,9 +1407,10 @@ function animate(){
 
 }
 
+
 animate();
 
 </script>
 
 </body>
-</html>
+  </html>
