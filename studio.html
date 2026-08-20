@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Project Y — 3D Studio</title>
 
@@ -14,40 +14,41 @@
 }
 
 body{
+  font-family:Arial,sans-serif;
   background:#070910;
   color:white;
-  font-family:Arial,sans-serif;
   overflow:hidden;
 }
 
 #app{
-  width:100vw;
-  height:100vh;
+  position:fixed;
+  inset:0;
 }
 
 header{
   position:fixed;
-  top:18px;
-  left:20px;
-  right:20px;
-  z-index:10;
+  top:16px;
+  left:16px;
+  right:16px;
+  z-index:20;
 
   display:flex;
   justify-content:space-between;
   align-items:center;
 
-  padding:15px 20px;
+  padding:14px 18px;
 
-  background:rgba(10,12,20,.75);
-  backdrop-filter:blur(15px);
+  background:rgba(8,10,17,.72);
+  backdrop-filter:blur(18px);
 
   border:1px solid rgba(255,255,255,.12);
-  border-radius:16px;
+  border-radius:18px;
 }
 
 .logo{
-  font-weight:bold;
   font-size:20px;
+  font-weight:800;
+  letter-spacing:-.5px;
 }
 
 .logo span{
@@ -55,82 +56,172 @@ header{
 }
 
 .back{
-  color:#aaa;
+  color:#aeb5c5;
   text-decoration:none;
   font-size:14px;
 }
 
+.back:hover{
+  color:white;
+}
+
+
+/* STUDIO PANEL */
+
 .panel{
   position:fixed;
-  z-index:5;
-
   right:20px;
   top:90px;
+  z-index:10;
 
-  width:280px;
+  width:300px;
   padding:22px;
 
-  border-radius:20px;
+  background:rgba(13,16,26,.88);
+  backdrop-filter:blur(20px);
 
-  background:rgba(15,18,29,.9);
   border:1px solid rgba(255,255,255,.12);
+  border-radius:22px;
 
-  backdrop-filter:blur(15px);
+  box-shadow:0 20px 70px rgba(0,0,0,.35);
 }
 
 .panel h1{
   font-size:24px;
-  margin-bottom:8px;
+  margin-bottom:7px;
 }
 
-.panel p{
-  color:#8f98aa;
+.subtitle{
+  color:#8e97a9;
   font-size:13px;
   line-height:1.5;
-  margin-bottom:20px;
+  margin-bottom:22px;
 }
 
-label{
+.control{
+  margin-bottom:19px;
+}
+
+.control label{
   display:block;
-  color:#ccc;
   font-size:13px;
+  color:#cbd2df;
   margin-bottom:8px;
 }
 
-input{
+input[type=color]{
   width:100%;
-  margin-bottom:20px;
-}
-
-button{
-  width:100%;
-  padding:12px;
-  margin-bottom:9px;
-
+  height:40px;
+  border:0;
   border-radius:10px;
-  border:1px solid rgba(255,255,255,.12);
-
-  background:rgba(255,255,255,.06);
-  color:white;
-
   cursor:pointer;
 }
 
-button:hover{
+input[type=range]{
+  width:100%;
+  accent-color:#7c9cff;
+  cursor:pointer;
+}
+
+.value{
+  float:right;
+  color:#7c9cff;
+}
+
+.button{
+  width:100%;
+  padding:11px;
+
+  margin-bottom:8px;
+
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:11px;
+
+  background:rgba(255,255,255,.05);
+  color:white;
+
+  cursor:pointer;
+  transition:.2s;
+}
+
+.button:hover{
+  background:rgba(124,156,255,.18);
+  border-color:#7c9cff;
+}
+
+.button.active{
   background:#7c9cff;
   color:#05060a;
+  border-color:#7c9cff;
+  font-weight:bold;
 }
+
+
+/* INSTRUCTIONS */
+
+.hint{
+  position:fixed;
+  bottom:22px;
+  left:50%;
+  transform:translateX(-50%);
+
+  z-index:10;
+
+  padding:10px 17px;
+
+  border-radius:30px;
+
+  background:rgba(8,10,17,.75);
+  border:1px solid rgba(255,255,255,.1);
+
+  color:#929bad;
+  font-size:12px;
+  white-space:nowrap;
+}
+
+
+/* MOBILE */
 
 @media(max-width:700px){
 
-  .panel{
-    left:12px;
-    right:12px;
-    bottom:15px;
-    top:auto;
-    width:auto;
+  header{
+    top:10px;
+    left:10px;
+    right:10px;
   }
 
+  .panel{
+    left:10px;
+    right:10px;
+    bottom:10px;
+    top:auto;
+    width:auto;
+
+    padding:15px;
+
+    border-radius:18px;
+  }
+
+  .panel h1{
+    font-size:20px;
+  }
+
+  .subtitle{
+    display:none;
+  }
+
+  .control{
+    margin-bottom:11px;
+  }
+
+  .button{
+    padding:9px;
+    margin-bottom:6px;
+  }
+
+  .hint{
+    display:none;
+  }
 }
 </style>
 </head>
@@ -139,65 +230,123 @@ button:hover{
 
 <header>
 
-<div class="logo">
-PROJECT Y<span>.</span>
-</div>
+  <div class="logo">
+    PROJECT Y<span>.</span>
+  </div>
 
-<a class="back" href="index.html">
-← Back
-</a>
+  <a class="back" href="index.html">
+    ← Back
+  </a>
 
 </header>
 
 <div id="app"></div>
 
+
 <div class="panel">
 
-<h1>3D Studio</h1>
+  <h1>3D Studio</h1>
 
-<p>
-Your first Project Y prototype.
-</p>
+  <p class="subtitle">
+    Create and explore your clothing concept in 3D.
+  </p>
 
-<label>Shirt colour</label>
 
-<input
-id="color"
-type="color"
-value="#eeeeee"
->
+  <div class="control">
 
-<label>Design size</label>
+    <label>
+      Garment Color
+    </label>
 
-<input
-id="size"
-type="range"
-min="0.5"
-max="2"
-step="0.1"
-value="1"
->
+    <input
+      id="color"
+      type="color"
+      value="#eeeeee"
+    >
 
-<button id="projectY">
-PROJECT Y
-</button>
+  </div>
 
-<button id="future">
-FUTURE
-</button>
 
-<button id="remove">
-Remove Design
-</button>
+  <div class="control">
+
+    <label>
+      Design Size
+
+      <span
+        class="value"
+        id="sizeValue"
+      >
+        100%
+      </span>
+
+    </label>
+
+    <input
+      id="size"
+      type="range"
+      min="50"
+      max="180"
+      value="100"
+    >
+
+  </div>
+
+
+  <div class="control">
+
+    <label>
+      Design
+    </label>
+
+    <button
+      class="button active"
+      id="projectY"
+    >
+      ✦ PROJECT Y
+    </button>
+
+    <button
+      class="button"
+      id="future"
+    >
+      ◆ FUTURE
+    </button>
+
+    <button
+      class="button"
+      id="remove"
+    >
+      Remove Design
+    </button>
+
+  </div>
+
+
+  <button
+    class="button"
+    id="reset"
+  >
+    Reset
+  </button>
 
 </div>
 
 
+<div class="hint">
+  👆 Drag to rotate &nbsp; • &nbsp; Pinch / scroll to zoom
+</div>
+
+
+<!-- THREE.JS -->
+
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
 
 <script>
 
-/* SCENE */
+/* =================================
+   SCENE
+================================= */
 
 const scene =
 new THREE.Scene();
@@ -206,71 +355,104 @@ scene.background =
 new THREE.Color(0x070910);
 
 
-/* CAMERA */
+/* =================================
+   CAMERA
+================================= */
 
 const camera =
 new THREE.PerspectiveCamera(
-45,
-window.innerWidth/window.innerHeight,
-0.1,
-100
+  42,
+  window.innerWidth /
+  window.innerHeight,
+  0.1,
+  100
 );
 
 camera.position.set(
-0,
-1,
-6
+  0,
+  1.2,
+  6
 );
 
 
-/* RENDERER */
+/* =================================
+   RENDERER
+================================= */
 
 const renderer =
 new THREE.WebGLRenderer({
-antialias:true
+  antialias:true
 });
 
-renderer.setSize(
-window.innerWidth,
-window.innerHeight
+renderer.setPixelRatio(
+  Math.min(
+    window.devicePixelRatio,
+    2
+  )
 );
 
-renderer.setPixelRatio(
-Math.min(window.devicePixelRatio,2)
+renderer.setSize(
+  window.innerWidth,
+  window.innerHeight
 );
+
+renderer.shadowMap.enabled = true;
 
 document
-.getElementById("app")
-.appendChild(renderer.domElement);
+  .getElementById("app")
+  .appendChild(
+    renderer.domElement
+  );
 
 
-/* LIGHT */
-
-const light =
-new THREE.DirectionalLight(
-0xffffff,
-3
-);
-
-light.position.set(
-3,
-5,
-5
-);
-
-scene.add(light);
-
+/* =================================
+   LIGHTING
+================================= */
 
 const ambient =
 new THREE.AmbientLight(
-0xffffff,
-1.5
+  0xffffff,
+  1.8
 );
 
 scene.add(ambient);
 
 
-/* SHIRT */
+const keyLight =
+new THREE.DirectionalLight(
+  0xffffff,
+  3
+);
+
+keyLight.position.set(
+  3,
+  5,
+  5
+);
+
+keyLight.castShadow = true;
+
+scene.add(keyLight);
+
+
+const fillLight =
+new THREE.DirectionalLight(
+  0x7c9cff,
+  1.5
+);
+
+fillLight.position.set(
+  -4,
+  2,
+  3
+);
+
+scene.add(fillLight);
+
+
+/* =================================
+   SHIRT
+================================= */
 
 const shirt =
 new THREE.Group();
@@ -278,10 +460,13 @@ new THREE.Group();
 scene.add(shirt);
 
 
+/* MATERIAL */
+
 const material =
 new THREE.MeshStandardMaterial({
-color:0xeeeeee,
-roughness:.8
+  color:0xeeeeee,
+  roughness:.78,
+  metalness:0
 });
 
 
@@ -289,252 +474,641 @@ roughness:.8
 
 const body =
 new THREE.Mesh(
-new THREE.BoxGeometry(
-2.4,
-2.8,
-.7
-),
-material
+  new THREE.BoxGeometry(
+    2.3,
+    2.8,
+    .72,
+    8,
+    12,
+    6
+  ),
+  material
 );
 
-body.position.y=1.2;
+body.position.y=1.25;
+
+body.castShadow=true;
+
+body.receiveShadow=true;
 
 shirt.add(body);
 
 
-/* SLEEVES */
+/* LEFT SLEEVE */
 
 const sleeveGeometry =
 new THREE.BoxGeometry(
-.9,
-1.4,
-.7
+  .85,
+  1.45,
+  .72,
+  6,
+  8,
+  5
 );
 
 
-const left =
+const leftSleeve =
 new THREE.Mesh(
-sleeveGeometry,
-material
+  sleeveGeometry,
+  material
 );
 
-left.position.set(
--1.55,
-1.8,
-0
+leftSleeve.position.set(
+  -1.5,
+  1.75,
+  0
 );
 
-left.rotation.z=-.35;
+leftSleeve.rotation.z=-.38;
 
-shirt.add(left);
+leftSleeve.castShadow=true;
+
+shirt.add(leftSleeve);
 
 
-const right =
+/* RIGHT SLEEVE */
+
+const rightSleeve =
 new THREE.Mesh(
-sleeveGeometry,
-material
+  sleeveGeometry,
+  material
 );
 
-right.position.set(
-1.55,
-1.8,
-0
+rightSleeve.position.set(
+  1.5,
+  1.75,
+  0
 );
 
-right.rotation.z=.35;
+rightSleeve.rotation.z=.38;
 
-shirt.add(right);
+rightSleeve.castShadow=true;
+
+shirt.add(rightSleeve);
 
 
-/* DESIGN */
+/* COLLAR */
+
+const collar =
+new THREE.Mesh(
+  new THREE.TorusGeometry(
+    .38,
+    .07,
+    16,
+    40,
+    Math.PI*1.8
+  ),
+  material
+);
+
+collar.rotation.x=
+Math.PI/2;
+
+collar.position.set(
+  0,
+  2.52,
+  .38
+);
+
+shirt.add(collar);
+
+
+/* =================================
+   DESIGN
+================================= */
 
 let design=null;
 
 
-function makeDesign(text){
+function createDesign(text){
 
-if(design){
+  removeDesign();
 
-shirt.remove(design);
 
-design.material.map.dispose();
+  const canvas =
+  document.createElement(
+    "canvas"
+  );
 
-design.material.dispose();
+  canvas.width=1200;
+  canvas.height=600;
 
-design.geometry.dispose();
+
+  const ctx =
+  canvas.getContext("2d");
+
+
+  ctx.clearRect(
+    0,
+    0,
+    1200,
+    600
+  );
+
+
+  ctx.font=
+  "bold 150px Arial";
+
+  ctx.textAlign=
+  "center";
+
+  ctx.textBaseline=
+  "middle";
+
+  ctx.fillStyle=
+  "#111827";
+
+
+  ctx.fillText(
+    text,
+    600,
+    300
+  );
+
+
+  const texture =
+  new THREE.CanvasTexture(
+    canvas
+  );
+
+
+  const designMaterial =
+  new THREE.MeshBasicMaterial({
+    map:texture,
+    transparent:true
+  });
+
+
+  design =
+  new THREE.Mesh(
+    new THREE.PlaneGeometry(
+      1.45,
+      .72
+    ),
+    designMaterial
+  );
+
+
+  design.position.set(
+    0,
+    1.4,
+    .37
+  );
+
+
+  shirt.add(design);
 
 }
 
 
-const canvas=
-document.createElement("canvas");
+/* =================================
+   REMOVE DESIGN
+================================= */
 
-canvas.width=1000;
-canvas.height=400;
+function removeDesign(){
 
-const ctx=
-canvas.getContext("2d");
-
-ctx.clearRect(
-0,0,1000,400
-);
-
-ctx.fillStyle="#111111";
-
-ctx.font="bold 120px Arial";
-
-ctx.textAlign="center";
-
-ctx.textBaseline="middle";
-
-ctx.fillText(
-text,
-500,
-200
-);
+  if(!design){
+    return;
+  }
 
 
-const texture=
-new THREE.CanvasTexture(canvas);
+  shirt.remove(
+    design
+  );
 
 
-const designMaterial=
-new THREE.MeshBasicMaterial({
-map:texture,
-transparent:true
-});
+  if(design.material.map){
+    design.material.map.dispose();
+  }
 
+  design.material.dispose();
 
-design=
-new THREE.Mesh(
-new THREE.PlaneGeometry(
-1.4,
-.56
-),
-designMaterial
-);
+  design.geometry.dispose();
 
-design.position.set(
-0,
-1.35,
-.36
-);
-
-shirt.add(design);
+  design=null;
 
 }
 
 
-/* COLOR */
+/* =================================
+   COLOR
+================================= */
 
 document
 .getElementById("color")
-.oninput=function(){
+.addEventListener(
+  "input",
+  function(){
 
-material.color.set(
-this.value
+    material.color.set(
+      this.value
+    );
+
+  }
 );
 
-};
 
-
-/* SIZE */
+/* =================================
+   DESIGN SIZE
+================================= */
 
 document
 .getElementById("size")
-.oninput=function(){
+.addEventListener(
+  "input",
+  function(){
 
-if(design){
+    const value =
+    Number(this.value);
 
-const s=
-Number(this.value);
+    document
+      .getElementById(
+        "sizeValue"
+      )
+      .textContent =
+      value+"%";
 
-design.scale.set(
-s,s,s
+
+    if(design){
+
+      const scale =
+      value/100;
+
+      design.scale.set(
+        scale,
+        scale,
+        scale
+      );
+
+    }
+
+  }
 );
 
-}
 
-};
-
-
-/* BUTTONS */
+/* =================================
+   BUTTONS
+================================= */
 
 document
 .getElementById("projectY")
-.onclick=function(){
+.addEventListener(
+  "click",
+  function(){
 
-makeDesign("PROJECT Y");
+    createDesign(
+      "PROJECT Y"
+    );
 
-};
+    activate(
+      this
+    );
+
+  }
+);
 
 
 document
 .getElementById("future")
-.onclick=function(){
+.addEventListener(
+  "click",
+  function(){
 
-makeDesign("FUTURE");
+    createDesign(
+      "FUTURE"
+    );
 
-};
+    activate(
+      this
+    );
+
+  }
+);
 
 
 document
 .getElementById("remove")
-.onclick=function(){
+.addEventListener(
+  "click",
+  function(){
 
-if(design){
+    removeDesign();
 
-shirt.remove(design);
+    document
+      .querySelectorAll(
+        ".button"
+      )
+      .forEach(
+        b =>
+        b.classList.remove(
+          "active"
+        )
+      );
 
-design.material.map.dispose();
+  }
+);
 
-design.material.dispose();
 
-design.geometry.dispose();
+function activate(button){
 
-design=null;
+  document
+    .querySelectorAll(
+      ".button"
+    )
+    .forEach(
+      b =>
+      b.classList.remove(
+        "active"
+      )
+    );
+
+  button.classList.add(
+    "active"
+  );
 
 }
 
-};
+
+/* =================================
+   RESET
+================================= */
+
+document
+.getElementById("reset")
+.addEventListener(
+  "click",
+  function(){
+
+    material.color.set(
+      0xeeeeee
+    );
+
+    document
+      .getElementById(
+        "color"
+      )
+      .value="#eeeeee";
 
 
-/* ROTATION */
+    document
+      .getElementById(
+        "size"
+      )
+      .value=100;
+
+
+    document
+      .getElementById(
+        "sizeValue"
+      )
+      .textContent="100%";
+
+
+    removeDesign();
+
+
+    shirt.rotation.y=0;
+
+    camera.position.set(
+      0,
+      1.2,
+      6
+    );
+
+  }
+);
+
+
+/* =================================
+   DRAG ROTATION
+================================= */
+
+let dragging=false;
+
+let lastX=0;
+
+
+renderer.domElement
+.addEventListener(
+  "pointerdown",
+  function(event){
+
+    dragging=true;
+
+    lastX=
+    event.clientX;
+
+  }
+);
+
+
+renderer.domElement
+.addEventListener(
+  "pointerup",
+  function(){
+
+    dragging=false;
+
+  }
+);
+
+
+renderer.domElement
+.addEventListener(
+  "pointerleave",
+  function(){
+
+    dragging=false;
+
+  }
+);
+
+
+renderer.domElement
+.addEventListener(
+  "pointermove",
+  function(event){
+
+    if(!dragging){
+      return;
+    }
+
+
+    const difference =
+    event.clientX-lastX;
+
+
+    shirt.rotation.y +=
+    difference*.01;
+
+
+    lastX=
+    event.clientX;
+
+  }
+);
+
+
+/* =================================
+   ZOOM
+================================= */
+
+renderer.domElement
+.addEventListener(
+  "wheel",
+  function(event){
+
+    event.preventDefault();
+
+
+    camera.position.z +=
+    event.deltaY*.005;
+
+
+    camera.position.z =
+    Math.max(
+      3.2,
+      Math.min(
+        9,
+        camera.position.z
+      )
+    );
+
+  },
+  {passive:false}
+);
+
+
+/* =================================
+   TOUCH PINCH ZOOM
+================================= */
+
+let startDistance=null;
+
+
+renderer.domElement
+.addEventListener(
+  "touchmove",
+  function(event){
+
+    if(
+      event.touches.length!==2
+    ){
+      return;
+    }
+
+
+    event.preventDefault();
+
+
+    const a =
+    event.touches[0];
+
+    const b =
+    event.touches[1];
+
+
+    const dx =
+    a.clientX-b.clientX;
+
+    const dy =
+    a.clientY-b.clientY;
+
+
+    const distance =
+    Math.sqrt(
+      dx*dx+dy*dy
+    );
+
+
+    if(startDistance!==null){
+
+      const difference =
+      startDistance-distance;
+
+
+      camera.position.z +=
+      difference*.01;
+
+
+      camera.position.z =
+      Math.max(
+        3.2,
+        Math.min(
+          9,
+          camera.position.z
+        )
+      );
+
+    }
+
+
+    startDistance=
+    distance;
+
+  },
+  {passive:false}
+);
+
+
+renderer.domElement
+.addEventListener(
+  "touchend",
+  function(){
+
+    startDistance=null;
+
+  }
+);
+
+
+/* =================================
+   RESIZE
+================================= */
+
+window.addEventListener(
+  "resize",
+  function(){
+
+    camera.aspect =
+    window.innerWidth/
+    window.innerHeight;
+
+    camera.updateProjectionMatrix();
+
+
+    renderer.setSize(
+      window.innerWidth,
+      window.innerHeight
+    );
+
+  }
+);
+
+
+/* =================================
+   START
+================================= */
+
+createDesign(
+  "PROJECT Y"
+);
+
 
 function animate(){
 
-requestAnimationFrame(
-animate
-);
+  requestAnimationFrame(
+    animate
+  );
 
-shirt.rotation.y+=0.006;
-
-renderer.render(
-scene,
-camera
-);
+  renderer.render(
+    scene,
+    camera
+  );
 
 }
 
 animate();
-
-
-/* RESIZE */
-
-window.onresize=function(){
-
-camera.aspect=
-window.innerWidth/
-window.innerHeight;
-
-camera.updateProjectionMatrix();
-
-renderer.setSize(
-window.innerWidth,
-window.innerHeight
-);
-
-};
 
 </script>
 
