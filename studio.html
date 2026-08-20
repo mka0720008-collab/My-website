@@ -369,7 +369,7 @@ input[type="file"]{
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
-
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script>
 
 
@@ -518,6 +518,44 @@ const shirt =
 new THREE.Group();
 
 scene.add(shirt);
+  const loader = new THREE.GLTFLoader();
+
+loader.load(
+  "models/tshirt.glb",
+
+  function(gltf){
+
+    const realShirt = gltf.scene;
+
+    realShirt.scale.set(
+      2,
+      2,
+      2
+    );
+
+    realShirt.position.set(
+      0,
+      -1,
+      0
+    );
+
+    shirt.add(realShirt);
+
+    console.log("REAL SHIRT LOADED");
+
+  },
+
+  undefined,
+
+  function(error){
+
+    console.error(
+      "SHIRT ERROR:",
+      error
+    );
+
+  }
+);
 
 
 /* ==========================================
