@@ -1,876 +1,542 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-  <title>Project Y — 3D Studio</title>
+<title>Project Y — 3D Studio</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #05060a;
-      color: white;
-      overflow: hidden;
-    }
+body{
+  background:#070910;
+  color:white;
+  font-family:Arial,sans-serif;
+  overflow:hidden;
+}
 
-    #canvas {
-      position: fixed;
-      inset: 0;
-    }
+#app{
+  width:100vw;
+  height:100vh;
+}
 
-    header {
-      position: fixed;
-      top: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(94%, 1100px);
-      padding: 15px 20px;
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 18px;
-      background: rgba(5,6,10,.72);
-      backdrop-filter: blur(18px);
-      z-index: 20;
+header{
+  position:fixed;
+  top:18px;
+  left:20px;
+  right:20px;
+  z-index:10;
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 
-    .logo {
-      font-size: 20px;
-      font-weight: 800;
-    }
+  padding:15px 20px;
 
-    .logo span {
-      color: #7c9cff;
-    }
+  background:rgba(10,12,20,.75);
+  backdrop-filter:blur(15px);
 
-    .back {
-      color: #aeb6c8;
-      text-decoration: none;
-      font-size: 14px;
-    }
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:16px;
+}
 
-    .back:hover {
-      color: white;
-    }
+.logo{
+  font-weight:bold;
+  font-size:20px;
+}
 
-    .panel {
-      position: fixed;
-      z-index: 10;
+.logo span{
+  color:#7c9cff;
+}
 
-      top: 95px;
-      right: 22px;
+.back{
+  color:#aaa;
+  text-decoration:none;
+  font-size:14px;
+}
 
-      width: 290px;
-      padding: 24px;
+.panel{
+  position:fixed;
+  z-index:5;
 
-      border-radius: 24px;
-      border: 1px solid rgba(255,255,255,.12);
+  right:20px;
+  top:90px;
 
-      background: rgba(12,15,24,.84);
-      backdrop-filter: blur(20px);
+  width:280px;
+  padding:22px;
 
-      box-shadow: 0 20px 70px rgba(0,0,0,.3);
-    }
+  border-radius:20px;
 
-    .panel h1 {
-      font-size: 25px;
-      margin-bottom: 7px;
-    }
+  background:rgba(15,18,29,.9);
+  border:1px solid rgba(255,255,255,.12);
 
-    .panel-description {
-      color: #8f98aa;
-      font-size: 13px;
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
+  backdrop-filter:blur(15px);
+}
 
-    .control {
-      margin-bottom: 22px;
-    }
+.panel h1{
+  font-size:24px;
+  margin-bottom:8px;
+}
 
-    .control label {
-      display: block;
-      color: #cbd2df;
-      font-size: 13px;
-      margin-bottom: 9px;
-    }
+.panel p{
+  color:#8f98aa;
+  font-size:13px;
+  line-height:1.5;
+  margin-bottom:20px;
+}
 
-    input[type="color"] {
-      width: 100%;
-      height: 42px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background: transparent;
-    }
+label{
+  display:block;
+  color:#ccc;
+  font-size:13px;
+  margin-bottom:8px;
+}
 
-    input[type="range"] {
-      width: 100%;
-      accent-color: #7c9cff;
-      cursor: pointer;
-    }
+input{
+  width:100%;
+  margin-bottom:20px;
+}
 
-    .button {
-      width: 100%;
-      padding: 12px;
+button{
+  width:100%;
+  padding:12px;
+  margin-bottom:9px;
 
-      border-radius: 11px;
-      border: 1px solid rgba(255,255,255,.12);
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.12);
 
-      background: rgba(255,255,255,.055);
-      color: white;
+  background:rgba(255,255,255,.06);
+  color:white;
 
-      cursor: pointer;
-      margin-bottom: 9px;
+  cursor:pointer;
+}
 
-      transition: .25s;
-    }
+button:hover{
+  background:#7c9cff;
+  color:#05060a;
+}
 
-    .button:hover {
-      background: rgba(124,156,255,.15);
-      border-color: #7c9cff;
-      transform: translateY(-2px);
-    }
+@media(max-width:700px){
 
-    .primary {
-      background: white;
-      color: #05060a;
-      font-weight: bold;
-    }
+  .panel{
+    left:12px;
+    right:12px;
+    bottom:15px;
+    top:auto;
+    width:auto;
+  }
 
-    .primary:hover {
-      background: white;
-    }
-
-    .info {
-      position: fixed;
-      bottom: 22px;
-      left: 50%;
-      transform: translateX(-50%);
-
-      padding: 10px 17px;
-      border-radius: 30px;
-
-      background: rgba(10,12,18,.75);
-      border: 1px solid rgba(255,255,255,.1);
-
-      color: #8f98aa;
-      font-size: 12px;
-
-      z-index: 10;
-    }
-
-    .loading {
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      background: #05060a;
-
-      font-size: 18px;
-    }
-
-    @media (max-width: 700px) {
-
-      .panel {
-        left: 12px;
-        right: 12px;
-        bottom: 55px;
-        top: auto;
-        width: auto;
-        padding: 18px;
-      }
-
-      .panel-description {
-        margin-bottom: 12px;
-      }
-
-      .control {
-        margin-bottom: 12px;
-      }
-
-      .info {
-        display: none;
-      }
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
-<div class="loading" id="loading" style="display:none;">
-  Loading Project Y...
+<header>
+
+<div class="logo">
+PROJECT Y<span>.</span>
 </div>
 
-  <header>
+<a class="back" href="index.html">
+← Back
+</a>
 
-    <div class="logo">
-      PROJECT Y<span>.</span>
-    </div>
+</header>
 
-    <a class="back" href="index.html">
-      ← Back to portfolio
-    </a>
+<div id="app"></div>
 
-  </header>
+<div class="panel">
 
-  <div id="canvas"></div>
+<h1>3D Studio</h1>
 
-  <div class="panel">
+<p>
+Your first Project Y prototype.
+</p>
 
-    <h1>3D Studio</h1>
+<label>Shirt colour</label>
 
-    <p class="panel-description">
-      Design your virtual clothing piece and explore it from every angle.
-    </p>
+<input
+id="color"
+type="color"
+value="#eeeeee"
+>
 
-    <div class="control">
+<label>Design size</label>
 
-      <label>Garment Color</label>
+<input
+id="size"
+type="range"
+min="0.5"
+max="2"
+step="0.1"
+value="1"
+>
 
-      <input
-        id="shirtColor"
-        type="color"
-        value="#f2f2f2"
-      >
+<button id="projectY">
+PROJECT Y
+</button>
 
-    </div>
+<button id="future">
+FUTURE
+</button>
 
-    <div class="control">
+<button id="remove">
+Remove Design
+</button>
 
-      <label>Design Size</label>
+</div>
 
-      <input
-        id="designSize"
-        type="range"
-        min="0.5"
-        max="2"
-        step="0.05"
-        value="1"
-      >
 
-    </div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 
-    <div class="control">
+<script>
 
-      <label>Choose Design</label>
+/* SCENE */
 
-      <button class="button primary" id="designY">
-        PROJECT Y
-      </button>
+const scene =
+new THREE.Scene();
 
-      <button class="button" id="designFuture">
-        FUTURE
-      </button>
+scene.background =
+new THREE.Color(0x070910);
 
-      <button class="button" id="removeDesign">
-        Remove Design
-      </button>
 
-    </div>
+/* CAMERA */
 
-    <button class="button" id="reset">
-      Reset Studio
-    </button>
+const camera =
+new THREE.PerspectiveCamera(
+45,
+window.innerWidth/window.innerHeight,
+0.1,
+100
+);
 
-  </div>
+camera.position.set(
+0,
+1,
+6
+);
 
-  <div class="info">
-    Drag to rotate • Scroll to zoom
-  </div>
 
+/* RENDERER */
 
-  <!-- THREE.JS -->
+const renderer =
+new THREE.WebGLRenderer({
+antialias:true
+});
 
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
 
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+renderer.setPixelRatio(
+Math.min(window.devicePixelRatio,2)
+);
 
+document
+.getElementById("app")
+.appendChild(renderer.domElement);
 
-  <script>
 
-    /* =========================
-       BASIC THREE.JS SETUP
-    ========================= */
+/* LIGHT */
 
-    const scene = new THREE.Scene();
+const light =
+new THREE.DirectionalLight(
+0xffffff,
+3
+);
 
-    scene.background =
-      new THREE.Color(0x05060a);
+light.position.set(
+3,
+5,
+5
+);
 
+scene.add(light);
 
-    const camera =
-      new THREE.PerspectiveCamera(
-        45,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        100
-      );
 
-    camera.position.set(
-      0,
-      1.4,
-      5
-    );
+const ambient =
+new THREE.AmbientLight(
+0xffffff,
+1.5
+);
 
+scene.add(ambient);
 
-    const renderer =
-      new THREE.WebGLRenderer({
-        antialias: true
-      });
 
-    renderer.setPixelRatio(
-      Math.min(window.devicePixelRatio, 2)
-    );
+/* SHIRT */
 
-    renderer.setSize(
-      window.innerWidth,
-      window.innerHeight
-    );
+const shirt =
+new THREE.Group();
 
-    renderer.shadowMap.enabled = true;
+scene.add(shirt);
 
-    document
-      .getElementById("canvas")
-      .appendChild(renderer.domElement);
 
+const material =
+new THREE.MeshStandardMaterial({
+color:0xeeeeee,
+roughness:.8
+});
 
-    /* =========================
-       CAMERA CONTROLS
-    ========================= */
 
-    const controls =
-      new THREE.OrbitControls(
-        camera,
-        renderer.domElement
-      );
+/* BODY */
 
-    controls.enableDamping = true;
+const body =
+new THREE.Mesh(
+new THREE.BoxGeometry(
+2.4,
+2.8,
+.7
+),
+material
+);
 
-    controls.dampingFactor = 0.07;
+body.position.y=1.2;
 
-    controls.minDistance = 3;
+shirt.add(body);
 
-    controls.maxDistance = 8;
 
-    controls.target.set(
-      0,
-      1.2,
-      0
-    );
+/* SLEEVES */
 
+const sleeveGeometry =
+new THREE.BoxGeometry(
+.9,
+1.4,
+.7
+);
 
-    /* =========================
-       LIGHTING
-    ========================= */
 
-    const ambient =
-      new THREE.AmbientLight(
-        0xffffff,
-        2
-      );
+const left =
+new THREE.Mesh(
+sleeveGeometry,
+material
+);
 
-    scene.add(ambient);
+left.position.set(
+-1.55,
+1.8,
+0
+);
 
+left.rotation.z=-.35;
 
-    const mainLight =
-      new THREE.DirectionalLight(
-        0xffffff,
-        3
-      );
+shirt.add(left);
 
-    mainLight.position.set(
-      3,
-      5,
-      4
-    );
 
-    mainLight.castShadow = true;
+const right =
+new THREE.Mesh(
+sleeveGeometry,
+material
+);
 
-    scene.add(mainLight);
+right.position.set(
+1.55,
+1.8,
+0
+);
 
+right.rotation.z=.35;
 
-    const blueLight =
-      new THREE.PointLight(
-        0x7c9cff,
-        18,
-        10
-      );
+shirt.add(right);
 
-    blueLight.position.set(
-      -3,
-      2,
-      3
-    );
 
-    scene.add(blueLight);
+/* DESIGN */
 
+let design=null;
 
-    /* =========================
-       SHIRT GROUP
-    ========================= */
 
-    const shirt =
-      new THREE.Group();
+function makeDesign(text){
 
-    scene.add(shirt);
+if(design){
 
+shirt.remove(design);
 
-    const shirtMaterial =
-      new THREE.MeshStandardMaterial({
-        color: 0xf2f2f2,
-        roughness: 0.78,
-        metalness: 0
-      });
+design.material.map.dispose();
 
+design.material.dispose();
 
-    /* =========================
-       SHIRT BODY
-    ========================= */
+design.geometry.dispose();
 
-    const bodyGeometry =
-      new THREE.BoxGeometry(
-        2.25,
-        2.7,
-        0.7,
-        12,
-        16,
-        8
-      );
+}
 
-    const body =
-      new THREE.Mesh(
-        bodyGeometry,
-        shirtMaterial
-      );
 
-    body.position.y = 1.3;
+const canvas=
+document.createElement("canvas");
 
-    body.castShadow = true;
+canvas.width=1000;
+canvas.height=400;
 
-    body.receiveShadow = true;
+const ctx=
+canvas.getContext("2d");
 
-    shirt.add(body);
+ctx.clearRect(
+0,0,1000,400
+);
 
+ctx.fillStyle="#111111";
 
-    /* =========================
-       LEFT SLEEVE
-    ========================= */
+ctx.font="bold 120px Arial";
 
-    const sleeveGeometry =
-      new THREE.BoxGeometry(
-        0.8,
-        1.35,
-        0.7,
-        10,
-        10,
-        8
-      );
+ctx.textAlign="center";
 
+ctx.textBaseline="middle";
 
-    const leftSleeve =
-      new THREE.Mesh(
-        sleeveGeometry,
-        shirtMaterial
-      );
+ctx.fillText(
+text,
+500,
+200
+);
 
-    leftSleeve.position.set(
-      -1.4,
-      1.7,
-      0
-    );
 
-    leftSleeve.rotation.z =
-      -0.35;
+const texture=
+new THREE.CanvasTexture(canvas);
 
-    leftSleeve.castShadow = true;
 
-    shirt.add(leftSleeve);
+const designMaterial=
+new THREE.MeshBasicMaterial({
+map:texture,
+transparent:true
+});
 
 
-    /* =========================
-       RIGHT SLEEVE
-    ========================= */
+design=
+new THREE.Mesh(
+new THREE.PlaneGeometry(
+1.4,
+.56
+),
+designMaterial
+);
 
-    const rightSleeve =
-      new THREE.Mesh(
-        sleeveGeometry,
-        shirtMaterial
-      );
+design.position.set(
+0,
+1.35,
+.36
+);
 
-    rightSleeve.position.set(
-      1.4,
-      1.7,
-      0
-    );
+shirt.add(design);
 
-    rightSleeve.rotation.z =
-      0.35;
+}
 
-    rightSleeve.castShadow = true;
 
-    shirt.add(rightSleeve);
+/* COLOR */
 
+document
+.getElementById("color")
+.oninput=function(){
 
-    /* =========================
-       NECK COLLAR
-    ========================= */
+material.color.set(
+this.value
+);
 
-    const collarGeometry =
-      new THREE.TorusGeometry(
-        0.4,
-        0.075,
-        16,
-        40,
-        Math.PI * 1.8
-      );
+};
 
-    const collar =
-      new THREE.Mesh(
-        collarGeometry,
-        shirtMaterial
-      );
 
-    collar.rotation.x =
-      Math.PI / 2;
+/* SIZE */
 
-    collar.position.set(
-      0,
-      2.55,
-      0.38
-    );
+document
+.getElementById("size")
+.oninput=function(){
 
-    shirt.add(collar);
+if(design){
 
+const s=
+Number(this.value);
 
-    /* =========================
-       DESIGN SYSTEM
-    ========================= */
+design.scale.set(
+s,s,s
+);
 
-    let design = null;
+}
 
+};
 
-    function createDesign(text) {
 
-      removeDesign();
+/* BUTTONS */
 
+document
+.getElementById("projectY")
+.onclick=function(){
 
-      const canvas =
-        document.createElement(
-          "canvas"
-        );
+makeDesign("PROJECT Y");
 
-      canvas.width = 1024;
+};
 
-      canvas.height = 512;
 
+document
+.getElementById("future")
+.onclick=function(){
 
-      const ctx =
-        canvas.getContext("2d");
+makeDesign("FUTURE");
 
+};
 
-      ctx.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-      );
 
+document
+.getElementById("remove")
+.onclick=function(){
 
-      ctx.font =
-        "bold 120px Arial";
+if(design){
 
-      ctx.textAlign =
-        "center";
+shirt.remove(design);
 
-      ctx.textBaseline =
-        "middle";
+design.material.map.dispose();
 
+design.material.dispose();
 
-      ctx.fillStyle =
-        "#111827";
+design.geometry.dispose();
 
+design=null;
 
-      ctx.fillText(
-        text,
-        canvas.width / 2,
-        canvas.height / 2
-      );
+}
 
+};
 
-      const texture =
-        new THREE.CanvasTexture(
-          canvas
-        );
 
-      texture.colorSpace =
-        THREE.SRGBColorSpace;
+/* ROTATION */
 
+function animate(){
 
-      const material =
-        new THREE.MeshBasicMaterial({
-          map: texture,
-          transparent: true
-        });
+requestAnimationFrame(
+animate
+);
 
+shirt.rotation.y+=0.006;
 
-      const geometry =
-        new THREE.PlaneGeometry(
-          1.45,
-          0.72
-        );
+renderer.render(
+scene,
+camera
+);
 
+}
 
-      design =
-        new THREE.Mesh(
-          geometry,
-          material
-        );
+animate();
 
 
-      design.position.set(
-        0,
-        1.45,
-        0.365
-      );
+/* RESIZE */
 
+window.onresize=function(){
 
-      shirt.add(design);
+camera.aspect=
+window.innerWidth/
+window.innerHeight;
 
-    }
+camera.updateProjectionMatrix();
 
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
 
-    function removeDesign() {
+};
 
-      if (!design) {
-        return;
-      }
-
-
-      shirt.remove(design);
-
-
-      design.geometry.dispose();
-
-      design.material.map.dispose();
-
-      design.material.dispose();
-
-
-      design = null;
-
-    }
-
-
-    /* =========================
-       COLOR CONTROL
-    ========================= */
-
-    document
-      .getElementById("shirtColor")
-      .addEventListener(
-        "input",
-        function() {
-
-          shirtMaterial.color.set(
-            this.value
-          );
-
-        }
-      );
-
-
-    /* =========================
-       DESIGN SIZE
-    ========================= */
-
-    document
-      .getElementById("designSize")
-      .addEventListener(
-        "input",
-        function() {
-
-          if (!design) {
-            return;
-          }
-
-
-          const size =
-            Number(this.value);
-
-
-          design.scale.set(
-            size,
-            size,
-            size
-          );
-
-        }
-      );
-
-
-    /* =========================
-       DESIGN BUTTONS
-    ========================= */
-
-    document
-      .getElementById("designY")
-      .addEventListener(
-        "click",
-        function() {
-
-          createDesign(
-            "PROJECT Y"
-          );
-
-        }
-      );
-
-
-    document
-      .getElementById("designFuture")
-      .addEventListener(
-        "click",
-        function() {
-
-          createDesign(
-            "FUTURE"
-          );
-
-        }
-      );
-
-
-    document
-      .getElementById("removeDesign")
-      .addEventListener(
-        "click",
-        function() {
-
-          removeDesign();
-
-        }
-      );
-
-
-    /* =========================
-       RESET
-    ========================= */
-
-    document
-      .getElementById("reset")
-      .addEventListener(
-        "click",
-        function() {
-
-          shirtMaterial.color.set(
-            0xf2f2f2
-          );
-
-
-          document
-            .getElementById("shirtColor")
-            .value = "#f2f2f2";
-
-
-          document
-            .getElementById("designSize")
-            .value = 1;
-
-
-          removeDesign();
-
-
-          camera.position.set(
-            0,
-            1.4,
-            5
-          );
-
-
-          controls.target.set(
-            0,
-            1.2,
-            0
-          );
-
-          controls.update();
-
-        }
-      );
-
-
-    /* =========================
-       RESIZE
-    ========================= */
-
-    window.addEventListener(
-      "resize",
-      function() {
-
-        camera.aspect =
-          window.innerWidth /
-          window.innerHeight;
-
-        camera.updateProjectionMatrix();
-
-
-        renderer.setSize(
-          window.innerWidth,
-          window.innerHeight
-        );
-
-      }
-    );
-
-
-    /* =========================
-       ANIMATION
-    ========================= */
-
-    function animate() {
-
-      requestAnimationFrame(
-        animate
-      );
-
-
-      controls.update();
-
-
-      renderer.render(
-        scene,
-        camera
-      );
-
-    }
-
-
-    animate();
-
-
-    /* =========================
-       REMOVE LOADING SCREEN
-    ========================= */
-
-    document
-      .getElementById("loading")
-      .style.display = "none";
-
-  </script>
+</script>
 
 </body>
-  </html>
+</html>
