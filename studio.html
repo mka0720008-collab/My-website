@@ -7,6 +7,7 @@
 <title>Project Y — 3D Studio</title>
 
 <style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -27,18 +28,18 @@ body{
 
 header{
   position:fixed;
-  top:16px;
-  left:16px;
-  right:16px;
   z-index:20;
+  top:15px;
+  left:15px;
+  right:15px;
 
   display:flex;
   justify-content:space-between;
   align-items:center;
 
-  padding:14px 18px;
+  padding:15px 18px;
 
-  background:rgba(8,10,17,.72);
+  background:rgba(8,10,17,.75);
   backdrop-filter:blur(18px);
 
   border:1px solid rgba(255,255,255,.12);
@@ -48,7 +49,6 @@ header{
 .logo{
   font-size:20px;
   font-weight:800;
-  letter-spacing:-.5px;
 }
 
 .logo span{
@@ -56,71 +56,53 @@ header{
 }
 
 .back{
-  color:#aeb5c5;
+  color:#aab1c0;
   text-decoration:none;
   font-size:14px;
 }
 
-.back:hover{
-  color:white;
-}
-
-
-/* STUDIO PANEL */
-
 .panel{
   position:fixed;
-  right:20px;
-  top:90px;
   z-index:10;
 
+  right:20px;
+  top:90px;
+
   width:300px;
+  max-height:calc(100vh - 110px);
+
+  overflow-y:auto;
+
   padding:22px;
 
-  background:rgba(13,16,26,.88);
+  background:rgba(13,16,26,.9);
   backdrop-filter:blur(20px);
 
   border:1px solid rgba(255,255,255,.12);
   border-radius:22px;
-
-  box-shadow:0 20px 70px rgba(0,0,0,.35);
 }
 
 .panel h1{
-  font-size:24px;
+  font-size:25px;
   margin-bottom:7px;
 }
 
-.subtitle{
-  color:#8e97a9;
+.description{
+  color:#929bad;
   font-size:13px;
   line-height:1.5;
   margin-bottom:22px;
 }
 
 .control{
-  margin-bottom:19px;
+  margin-bottom:18px;
 }
 
-.control label{
+label{
   display:block;
-  font-size:13px;
   color:#cbd2df;
+  font-size:13px;
   margin-bottom:8px;
-}
-
-input[type=color]{
-  width:100%;
-  height:40px;
-  border:0;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-input[type=range]{
-  width:100%;
-  accent-color:#7c9cff;
-  cursor:pointer;
 }
 
 .value{
@@ -128,10 +110,29 @@ input[type=range]{
   color:#7c9cff;
 }
 
+input[type="color"]{
+  width:100%;
+  height:40px;
+  border:0;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+input[type="range"]{
+  width:100%;
+  accent-color:#7c9cff;
+  cursor:pointer;
+}
+
+input[type="file"]{
+  width:100%;
+  color:#aeb6c5;
+  font-size:12px;
+}
+
 .button{
   width:100%;
   padding:11px;
-
   margin-bottom:8px;
 
   border:1px solid rgba(255,255,255,.12);
@@ -141,37 +142,26 @@ input[type=range]{
   color:white;
 
   cursor:pointer;
-  transition:.2s;
 }
 
 .button:hover{
-  background:rgba(124,156,255,.18);
+  background:rgba(124,156,255,.2);
   border-color:#7c9cff;
 }
-
-.button.active{
-  background:#7c9cff;
-  color:#05060a;
-  border-color:#7c9cff;
-  font-weight:bold;
-}
-
-
-/* INSTRUCTIONS */
 
 .hint{
   position:fixed;
-  bottom:22px;
+  z-index:5;
+
+  bottom:20px;
   left:50%;
   transform:translateX(-50%);
-
-  z-index:10;
 
   padding:10px 17px;
 
   border-radius:30px;
 
-  background:rgba(8,10,17,.75);
+  background:rgba(8,10,17,.8);
   border:1px solid rgba(255,255,255,.1);
 
   color:#929bad;
@@ -179,26 +169,18 @@ input[type=range]{
   white-space:nowrap;
 }
 
-
-/* MOBILE */
-
 @media(max-width:700px){
-
-  header{
-    top:10px;
-    left:10px;
-    right:10px;
-  }
 
   .panel{
     left:10px;
     right:10px;
     bottom:10px;
     top:auto;
+
     width:auto;
+    max-height:42vh;
 
-    padding:15px;
-
+    padding:16px;
     border-radius:18px;
   }
 
@@ -206,27 +188,26 @@ input[type=range]{
     font-size:20px;
   }
 
-  .subtitle{
+  .description{
     display:none;
   }
 
   .control{
-    margin-bottom:11px;
-  }
-
-  .button{
-    padding:9px;
-    margin-bottom:6px;
+    margin-bottom:12px;
   }
 
   .hint{
     display:none;
   }
+
 }
+
 </style>
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -234,11 +215,12 @@ input[type=range]{
     PROJECT Y<span>.</span>
   </div>
 
-  <a class="back" href="index.html">
+  <a href="index.html" class="back">
     ← Back
   </a>
 
 </header>
+
 
 <div id="app"></div>
 
@@ -247,10 +229,12 @@ input[type=range]{
 
   <h1>3D Studio</h1>
 
-  <p class="subtitle">
-    Create and explore your clothing concept in 3D.
+  <p class="description">
+    Turn an idea into a virtual clothing design.
   </p>
 
+
+  <!-- SHIRT COLOR -->
 
   <div class="control">
 
@@ -259,7 +243,7 @@ input[type=range]{
     </label>
 
     <input
-      id="color"
+      id="shirtColor"
       type="color"
       value="#eeeeee"
     >
@@ -267,9 +251,29 @@ input[type=range]{
   </div>
 
 
+  <!-- UPLOAD DESIGN -->
+
   <div class="control">
 
     <label>
+      Upload Your Design
+    </label>
+
+    <input
+      id="imageUpload"
+      type="file"
+      accept="image/*"
+    >
+
+  </div>
+
+
+  <!-- DESIGN SIZE -->
+
+  <div class="control">
+
+    <label>
+
       Design Size
 
       <span
@@ -282,71 +286,96 @@ input[type=range]{
     </label>
 
     <input
-      id="size"
+      id="designSize"
       type="range"
-      min="50"
-      max="180"
+      min="30"
+      max="220"
       value="100"
     >
 
   </div>
 
 
+  <!-- DESIGN VERTICAL POSITION -->
+
   <div class="control">
 
     <label>
-      Design
+
+      Design Position
+
+      <span
+        class="value"
+        id="positionValue"
+      >
+        0
+      </span>
+
     </label>
 
-    <button
-      class="button active"
-      id="projectY"
+    <input
+      id="designPosition"
+      type="range"
+      min="-70"
+      max="70"
+      value="0"
     >
-      ✦ PROJECT Y
-    </button>
-
-    <button
-      class="button"
-      id="future"
-    >
-      ◆ FUTURE
-    </button>
-
-    <button
-      class="button"
-      id="remove"
-    >
-      Remove Design
-    </button>
 
   </div>
 
 
   <button
     class="button"
-    id="reset"
+    id="projectButton"
   >
-    Reset
+    ✦ PROJECT Y Design
+  </button>
+
+
+  <button
+    class="button"
+    id="futureButton"
+  >
+    ◆ FUTURE Design
+  </button>
+
+
+  <button
+    class="button"
+    id="removeButton"
+  >
+    Remove Design
+  </button>
+
+
+  <button
+    class="button"
+    id="resetButton"
+  >
+    Reset Studio
   </button>
 
 </div>
 
 
 <div class="hint">
-  👆 Drag to rotate &nbsp; • &nbsp; Pinch / scroll to zoom
+  Drag to rotate • Pinch or scroll to zoom
 </div>
 
 
 <!-- THREE.JS -->
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
 
 <script>
 
-/* =================================
+
+/* ==========================================
    SCENE
-================================= */
+========================================== */
 
 const scene =
 new THREE.Scene();
@@ -355,13 +384,13 @@ scene.background =
 new THREE.Color(0x070910);
 
 
-/* =================================
+/* ==========================================
    CAMERA
-================================= */
+========================================== */
 
 const camera =
 new THREE.PerspectiveCamera(
-  42,
+  40,
   window.innerWidth /
   window.innerHeight,
   0.1,
@@ -370,14 +399,14 @@ new THREE.PerspectiveCamera(
 
 camera.position.set(
   0,
-  1.2,
+  1.4,
   6
 );
 
 
-/* =================================
+/* ==========================================
    RENDERER
-================================= */
+========================================== */
 
 const renderer =
 new THREE.WebGLRenderer({
@@ -396,7 +425,7 @@ renderer.setSize(
   window.innerHeight
 );
 
-renderer.shadowMap.enabled = true;
+renderer.shadowMap.enabled=true;
 
 document
   .getElementById("app")
@@ -405,9 +434,40 @@ document
   );
 
 
-/* =================================
-   LIGHTING
-================================= */
+/* ==========================================
+   ORBIT CONTROLS
+
+   Drag = rotate
+   Pinch = zoom
+   Scroll = zoom
+========================================== */
+
+const controls =
+new THREE.OrbitControls(
+  camera,
+  renderer.domElement
+);
+
+controls.enableDamping=true;
+
+controls.dampingFactor=.08;
+
+controls.enablePan=false;
+
+controls.minDistance=3;
+
+controls.maxDistance=9;
+
+controls.target.set(
+  0,
+  1.3,
+  0
+);
+
+
+/* ==========================================
+   LIGHTS
+========================================== */
 
 const ambient =
 new THREE.AmbientLight(
@@ -418,41 +478,41 @@ new THREE.AmbientLight(
 scene.add(ambient);
 
 
-const keyLight =
+const mainLight =
 new THREE.DirectionalLight(
   0xffffff,
   3
 );
 
-keyLight.position.set(
+mainLight.position.set(
   3,
   5,
   5
 );
 
-keyLight.castShadow = true;
+mainLight.castShadow=true;
 
-scene.add(keyLight);
+scene.add(mainLight);
 
 
-const fillLight =
+const sideLight =
 new THREE.DirectionalLight(
   0x7c9cff,
-  1.5
+  2
 );
 
-fillLight.position.set(
+sideLight.position.set(
   -4,
-  2,
-  3
+  3,
+  4
 );
 
-scene.add(fillLight);
+scene.add(sideLight);
 
 
-/* =================================
-   SHIRT
-================================= */
+/* ==========================================
+   SHIRT GROUP
+========================================== */
 
 const shirt =
 new THREE.Group();
@@ -460,57 +520,66 @@ new THREE.Group();
 scene.add(shirt);
 
 
-/* MATERIAL */
+/* ==========================================
+   SHIRT MATERIAL
+========================================== */
 
-const material =
+const shirtMaterial =
 new THREE.MeshStandardMaterial({
   color:0xeeeeee,
-  roughness:.78,
+  roughness:.8,
   metalness:0
 });
 
 
-/* BODY */
+/* ==========================================
+   SHIRT BODY
+
+   Rounded box gives the body
+   a softer clothing-like appearance.
+========================================== */
+
+const bodyGeometry =
+new THREE.BoxGeometry(
+  2.3,
+  2.7,
+  .65,
+  12,
+  16,
+  8
+);
 
 const body =
 new THREE.Mesh(
-  new THREE.BoxGeometry(
-    2.3,
-    2.8,
-    .72,
-    8,
-    12,
-    6
-  ),
-  material
+  bodyGeometry,
+  shirtMaterial
 );
 
 body.position.y=1.25;
 
 body.castShadow=true;
 
-body.receiveShadow=true;
-
 shirt.add(body);
 
 
-/* LEFT SLEEVE */
+/* ==========================================
+   LEFT SLEEVE
+========================================== */
 
 const sleeveGeometry =
 new THREE.BoxGeometry(
   .85,
   1.45,
-  .72,
-  6,
+  .65,
   8,
-  5
+  10,
+  6
 );
-
 
 const leftSleeve =
 new THREE.Mesh(
   sleeveGeometry,
-  material
+  shirtMaterial
 );
 
 leftSleeve.position.set(
@@ -526,12 +595,14 @@ leftSleeve.castShadow=true;
 shirt.add(leftSleeve);
 
 
-/* RIGHT SLEEVE */
+/* ==========================================
+   RIGHT SLEEVE
+========================================== */
 
 const rightSleeve =
 new THREE.Mesh(
   sleeveGeometry,
-  material
+  shirtMaterial
 );
 
 rightSleeve.position.set(
@@ -547,18 +618,23 @@ rightSleeve.castShadow=true;
 shirt.add(rightSleeve);
 
 
-/* COLLAR */
+/* ==========================================
+   COLLAR
+========================================== */
+
+const collarGeometry =
+new THREE.TorusGeometry(
+  .38,
+  .065,
+  16,
+  40,
+  Math.PI*1.8
+);
 
 const collar =
 new THREE.Mesh(
-  new THREE.TorusGeometry(
-    .38,
-    .07,
-    16,
-    40,
-    Math.PI*1.8
-  ),
-  material
+  collarGeometry,
+  shirtMaterial
 );
 
 collar.rotation.x=
@@ -566,21 +642,21 @@ Math.PI/2;
 
 collar.position.set(
   0,
-  2.52,
-  .38
+  2.48,
+  .34
 );
 
 shirt.add(collar);
 
 
-/* =================================
+/* ==========================================
    DESIGN
-================================= */
+========================================== */
 
 let design=null;
 
 
-function createDesign(text){
+function createTextDesign(text){
 
   removeDesign();
 
@@ -607,16 +683,13 @@ function createDesign(text){
 
 
   ctx.font=
-  "bold 150px Arial";
+  "bold 145px Arial";
 
-  ctx.textAlign=
-  "center";
+  ctx.textAlign="center";
 
-  ctx.textBaseline=
-  "middle";
+  ctx.textBaseline="middle";
 
-  ctx.fillStyle=
-  "#111827";
+  ctx.fillStyle="#111827";
 
 
   ctx.fillText(
@@ -632,7 +705,7 @@ function createDesign(text){
   );
 
 
-  const designMaterial =
+  const material =
   new THREE.MeshBasicMaterial({
     map:texture,
     transparent:true
@@ -642,17 +715,17 @@ function createDesign(text){
   design =
   new THREE.Mesh(
     new THREE.PlaneGeometry(
-      1.45,
-      .72
+      1.5,
+      .75
     ),
-    designMaterial
+    material
   );
 
 
   design.position.set(
     0,
     1.4,
-    .37
+    .34
   );
 
 
@@ -661,9 +734,80 @@ function createDesign(text){
 }
 
 
-/* =================================
+/* ==========================================
+   UPLOAD IMAGE
+========================================== */
+
+document
+  .getElementById("imageUpload")
+  .addEventListener(
+    "change",
+    function(event){
+
+      const file =
+      event.target.files[0];
+
+      if(!file){
+        return;
+      }
+
+
+      const reader =
+      new FileReader();
+
+
+      reader.onload=function(e){
+
+        removeDesign();
+
+
+        const texture =
+        new THREE.TextureLoader()
+        .load(
+          e.target.result
+        );
+
+
+        const material =
+        new THREE.MeshBasicMaterial({
+          map:texture,
+          transparent:true
+        });
+
+
+        design =
+        new THREE.Mesh(
+          new THREE.PlaneGeometry(
+            1.5,
+            1.0
+          ),
+          material
+        );
+
+
+        design.position.set(
+          0,
+          1.4,
+          .35
+        );
+
+
+        shirt.add(design);
+
+      };
+
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+  );
+
+
+/* ==========================================
    REMOVE DESIGN
-================================= */
+========================================== */
 
 function removeDesign(){
 
@@ -690,49 +834,54 @@ function removeDesign(){
 }
 
 
-/* =================================
+/* ==========================================
    COLOR
-================================= */
+========================================== */
 
 document
-.getElementById("color")
-.addEventListener(
-  "input",
-  function(){
+  .getElementById("shirtColor")
+  .addEventListener(
+    "input",
+    function(){
 
-    material.color.set(
-      this.value
-    );
+      shirtMaterial.color.set(
+        this.value
+      );
 
-  }
-);
+    }
+  );
 
 
-/* =================================
+/* ==========================================
    DESIGN SIZE
-================================= */
+========================================== */
 
 document
-.getElementById("size")
-.addEventListener(
-  "input",
-  function(){
+  .getElementById("designSize")
+  .addEventListener(
+    "input",
+    function(){
 
-    const value =
-    Number(this.value);
-
-    document
-      .getElementById(
-        "sizeValue"
-      )
-      .textContent =
-      value+"%";
+      const value =
+      Number(this.value);
 
 
-    if(design){
+      document
+        .getElementById(
+          "sizeValue"
+        )
+        .textContent =
+        value+"%";
+
+
+      if(!design){
+        return;
+      }
+
 
       const scale =
       value/100;
+
 
       design.scale.set(
         scale,
@@ -741,337 +890,166 @@ document
       );
 
     }
-
-  }
-);
-
-
-/* =================================
-   BUTTONS
-================================= */
-
-document
-.getElementById("projectY")
-.addEventListener(
-  "click",
-  function(){
-
-    createDesign(
-      "PROJECT Y"
-    );
-
-    activate(
-      this
-    );
-
-  }
-);
-
-
-document
-.getElementById("future")
-.addEventListener(
-  "click",
-  function(){
-
-    createDesign(
-      "FUTURE"
-    );
-
-    activate(
-      this
-    );
-
-  }
-);
-
-
-document
-.getElementById("remove")
-.addEventListener(
-  "click",
-  function(){
-
-    removeDesign();
-
-    document
-      .querySelectorAll(
-        ".button"
-      )
-      .forEach(
-        b =>
-        b.classList.remove(
-          "active"
-        )
-      );
-
-  }
-);
-
-
-function activate(button){
-
-  document
-    .querySelectorAll(
-      ".button"
-    )
-    .forEach(
-      b =>
-      b.classList.remove(
-        "active"
-      )
-    );
-
-  button.classList.add(
-    "active"
   );
 
-}
 
-
-/* =================================
-   RESET
-================================= */
+/* ==========================================
+   DESIGN POSITION
+========================================== */
 
 document
-.getElementById("reset")
-.addEventListener(
-  "click",
-  function(){
+  .getElementById("designPosition")
+  .addEventListener(
+    "input",
+    function(){
 
-    material.color.set(
-      0xeeeeee
-    );
+      const value =
+      Number(this.value);
 
-    document
-      .getElementById(
-        "color"
-      )
-      .value="#eeeeee";
 
-
-    document
-      .getElementById(
-        "size"
-      )
-      .value=100;
-
-
-    document
-      .getElementById(
-        "sizeValue"
-      )
-      .textContent="100%";
-
-
-    removeDesign();
-
-
-    shirt.rotation.y=0;
-
-    camera.position.set(
-      0,
-      1.2,
-      6
-    );
-
-  }
-);
-
-
-/* =================================
-   DRAG ROTATION
-================================= */
-
-let dragging=false;
-
-let lastX=0;
-
-
-renderer.domElement
-.addEventListener(
-  "pointerdown",
-  function(event){
-
-    dragging=true;
-
-    lastX=
-    event.clientX;
-
-  }
-);
-
-
-renderer.domElement
-.addEventListener(
-  "pointerup",
-  function(){
-
-    dragging=false;
-
-  }
-);
-
-
-renderer.domElement
-.addEventListener(
-  "pointerleave",
-  function(){
-
-    dragging=false;
-
-  }
-);
-
-
-renderer.domElement
-.addEventListener(
-  "pointermove",
-  function(event){
-
-    if(!dragging){
-      return;
-    }
-
-
-    const difference =
-    event.clientX-lastX;
-
-
-    shirt.rotation.y +=
-    difference*.01;
-
-
-    lastX=
-    event.clientX;
-
-  }
-);
-
-
-/* =================================
-   ZOOM
-================================= */
-
-renderer.domElement
-.addEventListener(
-  "wheel",
-  function(event){
-
-    event.preventDefault();
-
-
-    camera.position.z +=
-    event.deltaY*.005;
-
-
-    camera.position.z =
-    Math.max(
-      3.2,
-      Math.min(
-        9,
-        camera.position.z
-      )
-    );
-
-  },
-  {passive:false}
-);
-
-
-/* =================================
-   TOUCH PINCH ZOOM
-================================= */
-
-let startDistance=null;
-
-
-renderer.domElement
-.addEventListener(
-  "touchmove",
-  function(event){
-
-    if(
-      event.touches.length!==2
-    ){
-      return;
-    }
-
-
-    event.preventDefault();
-
-
-    const a =
-    event.touches[0];
-
-    const b =
-    event.touches[1];
-
-
-    const dx =
-    a.clientX-b.clientX;
-
-    const dy =
-    a.clientY-b.clientY;
-
-
-    const distance =
-    Math.sqrt(
-      dx*dx+dy*dy
-    );
-
-
-    if(startDistance!==null){
-
-      const difference =
-      startDistance-distance;
-
-
-      camera.position.z +=
-      difference*.01;
-
-
-      camera.position.z =
-      Math.max(
-        3.2,
-        Math.min(
-          9,
-          camera.position.z
+      document
+        .getElementById(
+          "positionValue"
         )
+        .textContent =
+        value;
+
+
+      if(!design){
+        return;
+      }
+
+
+      design.position.y =
+      1.4 +
+      value/100;
+
+    }
+  );
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+document
+  .getElementById("projectButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      createTextDesign(
+        "PROJECT Y"
       );
 
     }
+  );
 
 
-    startDistance=
-    distance;
+document
+  .getElementById("futureButton")
+  .addEventListener(
+    "click",
+    function(){
 
-  },
-  {passive:false}
+      createTextDesign(
+        "FUTURE"
+      );
+
+    }
+  );
+
+
+document
+  .getElementById("removeButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      removeDesign();
+
+    }
+  );
+
+
+/* ==========================================
+   RESET
+========================================== */
+
+document
+  .getElementById("resetButton")
+  .addEventListener(
+    "click",
+    function(){
+
+      shirtMaterial.color.set(
+        0xeeeeee
+      );
+
+
+      document
+        .getElementById(
+          "shirtColor"
+        )
+        .value="#eeeeee";
+
+
+      document
+        .getElementById(
+          "designSize"
+        )
+        .value=100;
+
+
+      document
+        .getElementById(
+          "sizeValue"
+        )
+        .textContent="100%";
+
+
+      document
+        .getElementById(
+          "designPosition"
+        )
+        .value=0;
+
+
+      document
+        .getElementById(
+          "positionValue"
+        )
+        .textContent="0";
+
+
+      removeDesign();
+
+
+      controls.reset();
+
+    }
+  );
+
+
+/* ==========================================
+   START WITH PROJECT Y
+========================================== */
+
+createTextDesign(
+  "PROJECT Y"
 );
 
 
-renderer.domElement
-.addEventListener(
-  "touchend",
-  function(){
-
-    startDistance=null;
-
-  }
-);
-
-
-/* =================================
+/* ==========================================
    RESIZE
-================================= */
+========================================== */
 
 window.addEventListener(
   "resize",
   function(){
 
     camera.aspect =
-    window.innerWidth/
+    window.innerWidth /
     window.innerHeight;
 
     camera.updateProjectionMatrix();
@@ -1086,20 +1064,19 @@ window.addEventListener(
 );
 
 
-/* =================================
-   START
-================================= */
-
-createDesign(
-  "PROJECT Y"
-);
-
+/* ==========================================
+   ANIMATION
+========================================== */
 
 function animate(){
 
   requestAnimationFrame(
     animate
   );
+
+
+  controls.update();
+
 
   renderer.render(
     scene,
